@@ -45,7 +45,7 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
   const [departureForm, setDepartureForm] = useState(EMPTY_DEPARTURE);
 
   const title = useMemo(() => (
-    detail ? `Quan ly tour: ${detail.Title}` : 'Chi tiet tour'
+    detail ? `Quản lý tour: ${detail.Title}` : 'Chi tiết tour'
   ), [detail]);
 
   const loadDetail = async () => {
@@ -53,7 +53,7 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
     setLoading(true);
     const { ok, data } = await adminAPI(`/admin/tours/${tourId}`);
     if (ok) setDetail(data.data);
-    else showToast(data.message || 'Khong the tai chi tiet tour.', 'error');
+    else showToast(data.message || 'Không thể tải chi tiết tour.', 'error');
     setLoading(false);
   };
 
@@ -89,11 +89,11 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
     setSavingItinerary(false);
 
     if (!ok) {
-      showToast(data.message || 'Khong the luu lich trinh.', 'error');
+      showToast(data.message || 'Không thể lưu lịch trình.', 'error');
       return;
     }
 
-    showToast(editingItineraryId ? 'Cap nhat lich trinh thanh cong.' : 'Them lich trinh thanh cong.', 'success');
+    showToast(editingItineraryId ? 'Cập nhật lịch trình thành công.' : 'Thêm lịch trình thành công.', 'success');
     resetItineraryForm();
     await loadDetail();
     onUpdated();
@@ -116,46 +116,46 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
     setSavingDeparture(false);
 
     if (!ok) {
-      showToast(data.message || 'Khong the luu lich khoi hanh.', 'error');
+      showToast(data.message || 'Không thể lưu lịch khởi hành.', 'error');
       return;
     }
 
-    showToast(editingDepartureId ? 'Cap nhat lich khoi hanh thanh cong.' : 'Them lich khoi hanh thanh cong.', 'success');
+    showToast(editingDepartureId ? 'Cập nhật lịch khởi hành thành công.' : 'Thêm lịch khởi hành thành công.', 'success');
     resetDepartureForm();
     await loadDetail();
     onUpdated();
   };
 
   const deleteItinerary = async (itineraryId) => {
-    if (!window.confirm('Xoa lich trinh nay?')) return;
+    if (!window.confirm('Xóa lịch trình này?')) return;
 
     const { ok, data } = await adminAPI(`/admin/tours/itineraries/${itineraryId}`, {
       method: 'DELETE',
     });
 
     if (!ok) {
-      showToast(data.message || 'Khong the xoa lich trinh.', 'error');
+      showToast(data.message || 'Không thể xóa lịch trình.', 'error');
       return;
     }
 
-    showToast('Xoa lich trinh thanh cong.', 'success');
+    showToast('Xóa lịch trình thành công.', 'success');
     await loadDetail();
     onUpdated();
   };
 
   const deleteDeparture = async (departureId) => {
-    if (!window.confirm('Xoa lich khoi hanh nay?')) return;
+    if (!window.confirm('Xóa lịch khởi hành này?')) return;
 
     const { ok, data } = await adminAPI(`/admin/tours/departures/${departureId}`, {
       method: 'DELETE',
     });
 
     if (!ok) {
-      showToast(data.message || 'Khong the xoa lich khoi hanh.', 'error');
+      showToast(data.message || 'Không thể xóa lịch khởi hành.', 'error');
       return;
     }
 
-    showToast('Xoa lich khoi hanh thanh cong.', 'success');
+    showToast('Xóa lịch khởi hành thành công.', 'success');
     await loadDetail();
     onUpdated();
   };
@@ -168,7 +168,7 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
       maxWidth={1100}
       footer={(
         <button type="button" className="btn btn-outline" onClick={onClose}>
-          Dong
+          Đóng
         </button>
       )}
     >
@@ -178,20 +178,20 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
           <div className="spinner" />
         </div>
       ) : !detail ? (
-        <p>Khong tai duoc chi tiet tour.</p>
+        <p>Không tải được chi tiết tour.</p>
       ) : (
         <div className="admin-stack">
           <div className="admin-summary-grid">
             <div className="admin-summary-card">
-              <div className="summary-label">Ma tour</div>
+              <div className="summary-label">Mã tour</div>
               <div className="summary-value">{detail.Code}</div>
             </div>
             <div className="admin-summary-card">
-              <div className="summary-label">Gia co ban</div>
+              <div className="summary-label">Giá cơ bản</div>
               <div className="summary-value">{formatCurrency(detail.BasePrice)}</div>
             </div>
             <div className="admin-summary-card">
-              <div className="summary-label">Trang thai</div>
+              <div className="summary-label">Trạng thái</div>
               <div className="summary-value"><AdminStatusBadge status={detail.Status} /></div>
             </div>
           </div>
@@ -199,29 +199,29 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
           <section className="admin-section-card">
             <div className="admin-section-header">
               <div>
-                <h3>Lich trinh</h3>
-                <p>Quan ly ngay di va noi dung tung ngay.</p>
+                <h3>Lịch trình</h3>
+                <p>Quản lý ngày đi và nội dung từng ngày.</p>
               </div>
             </div>
             <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th>Ngay</th>
-                    <th>Tieu de</th>
-                    <th>Hoat dong</th>
-                    <th>Bua an</th>
-                    <th>Thao tac</th>
+                    <th>Ngày</th>
+                    <th>Tiêu đề</th>
+                    <th>Hoạt động</th>
+                    <th>Bữa ăn</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
                   {detail.itineraries?.length ? detail.itineraries.map((item) => (
                     <tr key={item.ItineraryId}>
-                      <td>Ngay {item.DayNumber}</td>
+                      <td>Ngày {item.DayNumber}</td>
                       <td>{item.Title}</td>
                       <td>{item.Activities || '-'}</td>
                       <td>
-                        {[item.Breakfast && 'Sang', item.Lunch && 'Trua', item.Dinner && 'Toi'].filter(Boolean).join(', ') || '-'}
+                        {[item.Breakfast && 'Sáng', item.Lunch && 'Trưa', item.Dinner && 'Tối'].filter(Boolean).join(', ') || '-'}
                       </td>
                       <td>
                         <div className="admin-inline-actions">
@@ -241,17 +241,17 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
                               });
                             }}
                           >
-                            Sua
+                            Sửa
                           </button>
                           <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteItinerary(item.ItineraryId)}>
-                            Xoa
+                            Xóa
                           </button>
                         </div>
                       </td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="5">Chua co lich trinh.</td>
+                      <td colSpan="5">Chưa có lịch trình.</td>
                     </tr>
                   )}
                 </tbody>
@@ -260,27 +260,27 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
             <form className="admin-inline-form" onSubmit={submitItinerary}>
               <div className="form-row-3">
                 <div className="form-group">
-                  <label className="form-label">Ngay</label>
+                  <label className="form-label">Ngày</label>
                   <input className="form-control" type="number" min="1" value={itineraryForm.dayNumber} onChange={(event) => setItineraryForm((current) => ({ ...current, dayNumber: Number(event.target.value) }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Tieu de</label>
+                  <label className="form-label">Tiêu đề</label>
                   <input className="form-control" value={itineraryForm.title} onChange={(event) => setItineraryForm((current) => ({ ...current, title: event.target.value }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Luu tru</label>
+                  <label className="form-label">Lưu trú</label>
                   <input className="form-control" value={itineraryForm.accommodation} onChange={(event) => setItineraryForm((current) => ({ ...current, accommodation: event.target.value }))} />
                 </div>
               </div>
               <div className="form-group">
-                <label className="form-label">Hoat dong</label>
+                <label className="form-label">Hoạt động</label>
                 <textarea className="form-control" rows="3" value={itineraryForm.activities} onChange={(event) => setItineraryForm((current) => ({ ...current, activities: event.target.value }))} />
               </div>
               <div className="admin-checkbox-row">
                 {[
-                  ['breakfast', 'An sang'],
-                  ['lunch', 'An trua'],
-                  ['dinner', 'An toi'],
+                  ['breakfast', 'Ăn sáng'],
+                  ['lunch', 'Ăn trưa'],
+                  ['dinner', 'Ăn tối'],
                 ].map(([field, label]) => (
                   <label key={field} className="admin-checkbox">
                     <input
@@ -295,11 +295,11 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
               <div className="admin-inline-actions">
                 {editingItineraryId ? (
                   <button type="button" className="btn btn-outline" onClick={resetItineraryForm}>
-                    Huy sua
+                    Hủy sửa
                   </button>
                 ) : null}
                 <button type="submit" className="btn btn-primary" disabled={savingItinerary}>
-                  {savingItinerary ? 'Dang luu...' : editingItineraryId ? 'Luu lich trinh' : 'Them lich trinh'}
+                  {savingItinerary ? 'Đang lưu...' : editingItineraryId ? 'Lưu lịch trình' : 'Thêm lịch trình'}
                 </button>
               </div>
             </form>
@@ -308,21 +308,21 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
           <section className="admin-section-card">
             <div className="admin-section-header">
               <div>
-                <h3>Lich khoi hanh</h3>
-                <p>Quan ly gia va suc chua theo tung dot.</p>
+                <h3>Lịch khởi hành</h3>
+                <p>Quản lý giá và sức chứa theo từng đợt.</p>
               </div>
             </div>
             <div className="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th>Ma</th>
-                    <th>Ngay di</th>
-                    <th>Ngay ve</th>
-                    <th>Suc chua</th>
-                    <th>Gia nguoi lon</th>
-                    <th>Trang thai</th>
-                    <th>Thao tac</th>
+                    <th>Mã</th>
+                    <th>Ngày đi</th>
+                    <th>Ngày về</th>
+                    <th>Sức chứa</th>
+                    <th>Giá người lớn</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -353,17 +353,17 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
                               });
                             }}
                           >
-                            Sua
+                            Sửa
                           </button>
                           <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteDeparture(item.DepartureId)}>
-                            Xoa
+                            Xóa
                           </button>
                         </div>
                       </td>
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan="7">Chua co lich khoi hanh.</td>
+                      <td colSpan="7">Chưa có lịch khởi hành.</td>
                     </tr>
                   )}
                 </tbody>
@@ -373,54 +373,54 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
             <form className="admin-inline-form" onSubmit={submitDeparture}>
               <div className="form-row-3">
                 <div className="form-group">
-                  <label className="form-label">Ma lich</label>
+                  <label className="form-label">Mã lịch</label>
                   <input className="form-control" value={departureForm.departureCode} onChange={(event) => setDepartureForm((current) => ({ ...current, departureCode: event.target.value }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Ngay di</label>
+                  <label className="form-label">Ngày đi</label>
                   <input className="form-control" type="date" value={departureForm.startDate} onChange={(event) => setDepartureForm((current) => ({ ...current, startDate: event.target.value }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Ngay ve</label>
+                  <label className="form-label">Ngày về</label>
                   <input className="form-control" type="date" value={departureForm.endDate} onChange={(event) => setDepartureForm((current) => ({ ...current, endDate: event.target.value }))} required />
                 </div>
               </div>
               <div className="form-row-3">
                 <div className="form-group">
-                  <label className="form-label">Suc chua</label>
+                  <label className="form-label">Sức chứa</label>
                   <input className="form-control" type="number" min="1" value={departureForm.capacity} onChange={(event) => setDepartureForm((current) => ({ ...current, capacity: Number(event.target.value) }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Gia nguoi lon</label>
+                  <label className="form-label">Giá người lớn</label>
                   <input className="form-control" type="number" min="0" value={departureForm.adultPrice} onChange={(event) => setDepartureForm((current) => ({ ...current, adultPrice: Number(event.target.value) }))} required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Gia tre em</label>
+                  <label className="form-label">Giá trẻ em</label>
                   <input className="form-control" type="number" min="0" value={departureForm.childPrice} onChange={(event) => setDepartureForm((current) => ({ ...current, childPrice: Number(event.target.value) }))} required />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label className="form-label">Gia em be</label>
+                  <label className="form-label">Giá em bé</label>
                   <input className="form-control" type="number" min="0" value={departureForm.infantPrice} onChange={(event) => setDepartureForm((current) => ({ ...current, infantPrice: Number(event.target.value) }))} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Trang thai</label>
+                  <label className="form-label">Trạng thái</label>
                   <select className="form-select" value={departureForm.status} onChange={(event) => setDepartureForm((current) => ({ ...current, status: event.target.value }))}>
-                    <option value="open">Mo ban</option>
-                    <option value="closed">Dong ban</option>
-                    <option value="cancelled">Da huy</option>
+                    <option value="open">Mở bán</option>
+                    <option value="closed">Đóng bán</option>
+                    <option value="cancelled">Đã hủy</option>
                   </select>
                 </div>
               </div>
               <div className="admin-inline-actions">
                 {editingDepartureId ? (
                   <button type="button" className="btn btn-outline" onClick={resetDepartureForm}>
-                    Huy sua
+                    Hủy sửa
                   </button>
                 ) : null}
                 <button type="submit" className="btn btn-primary" disabled={savingDeparture}>
-                  {savingDeparture ? 'Dang luu...' : editingDepartureId ? 'Luu lich khoi hanh' : 'Them lich khoi hanh'}
+                  {savingDeparture ? 'Đang lưu...' : editingDepartureId ? 'Lưu lịch khởi hành' : 'Thêm lịch khởi hành'}
                 </button>
               </div>
             </form>

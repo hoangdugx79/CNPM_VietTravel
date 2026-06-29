@@ -2,9 +2,9 @@ import AdminModal from './AdminModal';
 
 export default function AdminConfirmDialog({
   open,
-  title = 'Xac nhan thao tac',
+  title = 'Xác nhận thao tác',
   message,
-  confirmLabel = 'Xac nhan',
+  confirmLabel = 'Xác nhận',
   confirmClassName = 'btn-danger',
   loading = false,
   onClose,
@@ -19,10 +19,10 @@ export default function AdminConfirmDialog({
       footer={(
         <>
           <button type="button" className="btn btn-outline" onClick={onClose} disabled={loading}>
-            Dong
+            Đóng
           </button>
           <button type="button" className={`btn ${confirmClassName}`} onClick={onConfirm} disabled={loading}>
-            {loading ? 'Dang xu ly...' : confirmLabel}
+            {loading ? 'Đang xử lý...' : confirmLabel}
           </button>
         </>
       )}

@@ -45,7 +45,7 @@ export default function DestinationManagementPage() {
       setRows(data.data || []);
       setPagination(data.pagination || { total: 0, page: 1, limit: 10, totalPages: 1 });
     } else {
-      showToast(data.message || 'Khong the tai danh sach diem den.', 'error');
+      showToast(data.message || 'Không thể tải danh sách điểm đến.', 'error');
     }
     setLoading(false);
   };
@@ -77,10 +77,10 @@ export default function DestinationManagementPage() {
     });
     setSubmitting(false);
     if (!ok) {
-      showToast(data.message || 'Khong the luu diem den.', 'error');
+      showToast(data.message || 'Không thể lưu điểm đến.', 'error');
       return;
     }
-    showToast(editingItem ? 'Cap nhat diem den thanh cong.' : 'Them diem den thanh cong.', 'success');
+    showToast(editingItem ? 'Cập nhật điểm đến thành công.' : 'Thêm điểm đến thành công.', 'success');
     setFormOpen(false);
     setEditingItem(null);
     loadData();
@@ -92,21 +92,21 @@ export default function DestinationManagementPage() {
     const { ok, data } = await adminAPI(`/admin/destinations/${deleteTarget.DestinationId}`, { method: 'DELETE' });
     setDeleteLoading(false);
     if (!ok) {
-      showToast(data.message || 'Khong the xoa diem den.', 'error');
+      showToast(data.message || 'Không thể xóa điểm đến.', 'error');
       return;
     }
-    showToast('Xoa diem den thanh cong.', 'success');
+    showToast('Xóa điểm đến thành công.', 'success');
     setDeleteTarget(null);
     loadData();
   };
 
   return (
-    <AdminLayout title="Diem den" subtitle="CRUD diem den, du lieu nen cho bo loc va tour">
+    <AdminLayout title="Điểm đến" subtitle="CRUD điểm đến, dữ liệu nền cho bộ lọc và tour">
       <ToastContainer />
       <div className="page-header-bar">
-        <h2>Danh sach diem den</h2>
+        <h2>Danh sách điểm đến</h2>
         <button type="button" className="btn btn-primary" onClick={openCreate}>
-          <i className="fas fa-plus" /> Them diem den
+          <i className="fas fa-plus" /> Thêm điểm đến
         </button>
       </div>
       <div className="admin-card">
@@ -115,14 +115,14 @@ export default function DestinationManagementPage() {
             <form className="admin-filter-form" onSubmit={(event) => { event.preventDefault(); setFilters((current) => ({ ...current, search: draftSearch.trim(), page: 1 })); }}>
               <div className="search-input">
                 <i className="fas fa-search" />
-                <input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tim ten, slug, tinh thanh..." />
+                <input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tìm tên, slug, tỉnh thành..." />
               </div>
               <select className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}>
-                <option value="">Tat ca trang thai</option>
-                <option value="active">Hoat dong</option>
-                <option value="inactive">Khong hoat dong</option>
+                <option value="">Tất cả trạng thái</option>
+                <option value="active">Hoạt động</option>
+                <option value="inactive">Không hoạt động</option>
               </select>
-              <button type="submit" className="btn btn-outline">Loc</button>
+              <button type="submit" className="btn btn-outline">Lọc</button>
             </form>
           </div>
           {loading ? <div className="loading-spinner"><div className="spinner" /></div> : rows.length ? (
@@ -131,12 +131,12 @@ export default function DestinationManagementPage() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Ten</th>
+                      <th>Tên</th>
                       <th>Slug</th>
-                      <th>Khu vuc</th>
-                      <th>Tour active</th>
-                      <th>Trang thai</th>
-                      <th>Thao tac</th>
+                      <th>Khu vực</th>
+                      <th>Tour hoạt động</th>
+                      <th>Trạng thái</th>
+                      <th>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -152,8 +152,8 @@ export default function DestinationManagementPage() {
                         <td><AdminStatusBadge status={item.Status} /></td>
                         <td>
                           <div className="admin-inline-actions">
-                            <button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sua</button>
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Xoa</button>
+                            <button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sửa</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Xóa</button>
                           </div>
                         </td>
                       </tr>
@@ -163,61 +163,61 @@ export default function DestinationManagementPage() {
               </div>
               <AdminPagination pagination={pagination} onPageChange={(page) => setFilters((current) => ({ ...current, page }))} />
             </>
-          ) : <AdminEmptyState icon="fa-compass" title="Chua co diem den" description="Them diem den de lien ket voi tour." />}
+          ) : <AdminEmptyState icon="fa-compass" title="Chưa có điểm đến" description="Thêm điểm đến để liên kết với tour." />}
         </div>
       </div>
 
       <AdminModal
         open={formOpen}
-        title={editingItem ? 'Cap nhat diem den' : 'Them diem den'}
+        title={editingItem ? 'Cập nhật điểm đến' : 'Thêm điểm đến'}
         onClose={() => setFormOpen(false)}
         footer={(
           <>
-            <button type="button" className="btn btn-outline" onClick={() => setFormOpen(false)} disabled={submitting}>Dong</button>
-            <button type="submit" form="destination-form" className="btn btn-primary" disabled={submitting}>{submitting ? 'Dang luu...' : 'Luu'}</button>
+            <button type="button" className="btn btn-outline" onClick={() => setFormOpen(false)} disabled={submitting}>Đóng</button>
+            <button type="submit" form="destination-form" className="btn btn-primary" disabled={submitting}>{submitting ? 'Đang lưu...' : 'Lưu'}</button>
           </>
         )}
       >
         <form id="destination-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Ten</label>
+              <label className="form-label">Tên</label>
               <input className="form-control" value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} required />
             </div>
             <div className="form-group">
               <label className="form-label">Slug</label>
-              <input className="form-control" value={form.slug} onChange={(event) => setForm((current) => ({ ...current, slug: event.target.value }))} placeholder="De trong de giu hoac tu sinh" />
+              <input className="form-control" value={form.slug} onChange={(event) => setForm((current) => ({ ...current, slug: event.target.value }))} placeholder="Để trống để giữ hoặc tự sinh" />
             </div>
           </div>
           <div className="form-row-3">
             <div className="form-group">
-              <label className="form-label">Tinh/Thanh</label>
+              <label className="form-label">Tỉnh/Thành</label>
               <input className="form-control" value={form.province} onChange={(event) => setForm((current) => ({ ...current, province: event.target.value }))} />
             </div>
             <div className="form-group">
-              <label className="form-label">Khu vuc</label>
+              <label className="form-label">Khu vực</label>
               <input className="form-control" value={form.region} onChange={(event) => setForm((current) => ({ ...current, region: event.target.value }))} />
             </div>
             <div className="form-group">
-              <label className="form-label">Quoc gia</label>
+              <label className="form-label">Quốc gia</label>
               <input className="form-control" value={form.country} onChange={(event) => setForm((current) => ({ ...current, country: event.target.value }))} />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Anh</label>
+              <label className="form-label">Ảnh</label>
               <input className="form-control" value={form.imageUrl} onChange={(event) => setForm((current) => ({ ...current, imageUrl: event.target.value }))} />
             </div>
             <div className="form-group">
-              <label className="form-label">Trang thai</label>
+              <label className="form-label">Trạng thái</label>
               <select className="form-select" value={form.status} onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}>
-                <option value="active">Hoat dong</option>
-                <option value="inactive">Khong hoat dong</option>
+                <option value="active">Hoạt động</option>
+                <option value="inactive">Không hoạt động</option>
               </select>
             </div>
           </div>
           <div className="form-group">
-            <label className="form-label">Mo ta</label>
+            <label className="form-label">Mô tả</label>
             <textarea className="form-control" rows="4" value={form.description} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
           </div>
         </form>
@@ -225,8 +225,8 @@ export default function DestinationManagementPage() {
 
       <AdminConfirmDialog
         open={Boolean(deleteTarget)}
-        title="Xoa diem den"
-        message={`Xoa diem den "${deleteTarget?.Name || ''}". He thong se chan neu diem den dang duoc su dung trong tour.`}
+        title="Xóa điểm đến"
+        message={`Xóa điểm đến "${deleteTarget?.Name || ''}". Hệ thống sẽ chặn nếu điểm đến đang được sử dụng trong tour.`}
         loading={deleteLoading}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDelete}

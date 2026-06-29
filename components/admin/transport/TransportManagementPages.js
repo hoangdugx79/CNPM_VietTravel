@@ -25,26 +25,26 @@ function useAdminList(loadFn, deps) {
     reload();
   }, deps);
 
-  return { rows, setRows, pagination, setPagination, loading, reload };
+  return { rows, pagination, loading, reload };
 }
 
 function ProviderForm({ form, setForm }) {
   return (
     <>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Ten</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
-        <div className="form-group"><label className="form-label">Loai</label><input className="form-control" value={form.type} onChange={(e) => setForm((c) => ({ ...c, type: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Tên</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Loại</label><input className="form-control" value={form.type} onChange={(e) => setForm((c) => ({ ...c, type: e.target.value }))} /></div>
       </div>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Nguoi lien he</label><input className="form-control" value={form.contactPersonName} onChange={(e) => setForm((c) => ({ ...c, contactPersonName: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Dien thoai</label><input className="form-control" value={form.contactPhone} onChange={(e) => setForm((c) => ({ ...c, contactPhone: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Người liên hệ</label><input className="form-control" value={form.contactPersonName} onChange={(e) => setForm((c) => ({ ...c, contactPersonName: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Điện thoại</label><input className="form-control" value={form.contactPhone} onChange={(e) => setForm((c) => ({ ...c, contactPhone: e.target.value }))} /></div>
       </div>
       <div className="form-row">
         <div className="form-group"><label className="form-label">Email</label><input className="form-control" value={form.contactEmail} onChange={(e) => setForm((c) => ({ ...c, contactEmail: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trang thai</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoat dong</option><option value="inactive">Khong hoat dong</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
       </div>
-      <div className="form-group"><label className="form-label">Loai dich vu</label><input className="form-control" value={form.serviceTypes} onChange={(e) => setForm((c) => ({ ...c, serviceTypes: e.target.value }))} /></div>
-      <div className="form-group"><label className="form-label">Dia chi</label><textarea className="form-control" rows="3" value={form.contactAddress} onChange={(e) => setForm((c) => ({ ...c, contactAddress: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Loại dịch vụ</label><input className="form-control" value={form.serviceTypes} onChange={(e) => setForm((c) => ({ ...c, serviceTypes: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Địa chỉ</label><textarea className="form-control" rows="3" value={form.contactAddress} onChange={(e) => setForm((c) => ({ ...c, contactAddress: e.target.value }))} /></div>
     </>
   );
 }
@@ -53,21 +53,21 @@ function VehicleForm({ form, setForm, providers }) {
   return (
     <>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">Nha cung cap</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chon nha cung cap</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
-        <div className="form-group"><label className="form-label">Ma xe</label><input className="form-control" value={form.vehicleCode} onChange={(e) => setForm((c) => ({ ...c, vehicleCode: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Bien so</label><input className="form-control" value={form.plateNumber} onChange={(e) => setForm((c) => ({ ...c, plateNumber: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Nhà cung cấp</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chọn nhà cung cấp</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
+        <div className="form-group"><label className="form-label">Mã xe</label><input className="form-control" value={form.vehicleCode} onChange={(e) => setForm((c) => ({ ...c, vehicleCode: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Biển số</label><input className="form-control" value={form.plateNumber} onChange={(e) => setForm((c) => ({ ...c, plateNumber: e.target.value }))} required /></div>
       </div>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">Loai</label><input className="form-control" value={form.type} onChange={(e) => setForm((c) => ({ ...c, type: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Hang</label><input className="form-control" value={form.brand} onChange={(e) => setForm((c) => ({ ...c, brand: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Loại</label><input className="form-control" value={form.type} onChange={(e) => setForm((c) => ({ ...c, type: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Hãng</label><input className="form-control" value={form.brand} onChange={(e) => setForm((c) => ({ ...c, brand: e.target.value }))} /></div>
         <div className="form-group"><label className="form-label">Model</label><input className="form-control" value={form.model} onChange={(e) => setForm((c) => ({ ...c, model: e.target.value }))} /></div>
       </div>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">So ghe</label><input className="form-control" type="number" min="0" value={form.seatCapacity} onChange={(e) => setForm((c) => ({ ...c, seatCapacity: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trang thai</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">San sang</option><option value="inactive">Khong hoat dong</option></select></div>
+        <div className="form-group"><label className="form-label">Số ghế</label><input className="form-control" type="number" min="0" value={form.seatCapacity} onChange={(e) => setForm((c) => ({ ...c, seatCapacity: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">Sẵn sàng</option><option value="inactive">Không hoạt động</option></select></div>
       </div>
-      <div className="form-group"><label className="form-label">Tien ich</label><textarea className="form-control" rows="3" value={form.amenities} onChange={(e) => setForm((c) => ({ ...c, amenities: e.target.value }))} /></div>
-      <div className="form-group"><label className="form-label">Anh</label><input className="form-control" value={form.imageUrl} onChange={(e) => setForm((c) => ({ ...c, imageUrl: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Tiện ích</label><textarea className="form-control" rows="3" value={form.amenities} onChange={(e) => setForm((c) => ({ ...c, amenities: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Ảnh</label><input className="form-control" value={form.imageUrl} onChange={(e) => setForm((c) => ({ ...c, imageUrl: e.target.value }))} /></div>
     </>
   );
 }
@@ -76,18 +76,18 @@ function DriverForm({ form, setForm, providers }) {
   return (
     <>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Nha cung cap</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chon nha cung cap</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
-        <div className="form-group"><label className="form-label">Ho ten</label><input className="form-control" value={form.fullName} onChange={(e) => setForm((c) => ({ ...c, fullName: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Nhà cung cấp</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chọn nhà cung cấp</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
+        <div className="form-group"><label className="form-label">Họ tên</label><input className="form-control" value={form.fullName} onChange={(e) => setForm((c) => ({ ...c, fullName: e.target.value }))} required /></div>
       </div>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">Dien thoai</label><input className="form-control" value={form.phone} onChange={(e) => setForm((c) => ({ ...c, phone: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Điện thoại</label><input className="form-control" value={form.phone} onChange={(e) => setForm((c) => ({ ...c, phone: e.target.value }))} /></div>
         <div className="form-group"><label className="form-label">Email</label><input className="form-control" value={form.email} onChange={(e) => setForm((c) => ({ ...c, email: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trang thai</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">San sang</option><option value="inactive">Khong hoat dong</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">Sẵn sàng</option><option value="inactive">Không hoạt động</option></select></div>
       </div>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">So GPLX</label><input className="form-control" value={form.licenseNumber} onChange={(e) => setForm((c) => ({ ...c, licenseNumber: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Hang GPLX</label><input className="form-control" value={form.licenseClass} onChange={(e) => setForm((c) => ({ ...c, licenseClass: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Nam kinh nghiem</label><input className="form-control" type="number" min="0" value={form.experienceYears} onChange={(e) => setForm((c) => ({ ...c, experienceYears: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Số GPLX</label><input className="form-control" value={form.licenseNumber} onChange={(e) => setForm((c) => ({ ...c, licenseNumber: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Hạng GPLX</label><input className="form-control" value={form.licenseClass} onChange={(e) => setForm((c) => ({ ...c, licenseClass: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Năm kinh nghiệm</label><input className="form-control" type="number" min="0" value={form.experienceYears} onChange={(e) => setForm((c) => ({ ...c, experienceYears: e.target.value }))} /></div>
       </div>
     </>
   );
@@ -97,23 +97,23 @@ function RouteForm({ form, setForm }) {
   return (
     <>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Ma tuyen</label><input className="form-control" value={form.routeCode} onChange={(e) => setForm((c) => ({ ...c, routeCode: e.target.value }))} required /></div>
-        <div className="form-group"><label className="form-label">Ten tuyen</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Mã tuyến</label><input className="form-control" value={form.routeCode} onChange={(e) => setForm((c) => ({ ...c, routeCode: e.target.value }))} required /></div>
+        <div className="form-group"><label className="form-label">Tên tuyến</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
       </div>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Diem di</label><input className="form-control" value={form.fromName} onChange={(e) => setForm((c) => ({ ...c, fromName: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Loai diem di</label><input className="form-control" value={form.fromType} onChange={(e) => setForm((c) => ({ ...c, fromType: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Điểm đi</label><input className="form-control" value={form.fromName} onChange={(e) => setForm((c) => ({ ...c, fromName: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Loại điểm đi</label><input className="form-control" value={form.fromType} onChange={(e) => setForm((c) => ({ ...c, fromType: e.target.value }))} /></div>
       </div>
-      <div className="form-group"><label className="form-label">Dia chi diem di</label><input className="form-control" value={form.fromAddress} onChange={(e) => setForm((c) => ({ ...c, fromAddress: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Địa chỉ điểm đi</label><input className="form-control" value={form.fromAddress} onChange={(e) => setForm((c) => ({ ...c, fromAddress: e.target.value }))} /></div>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Diem den</label><input className="form-control" value={form.toName} onChange={(e) => setForm((c) => ({ ...c, toName: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Loai diem den</label><input className="form-control" value={form.toType} onChange={(e) => setForm((c) => ({ ...c, toType: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Điểm đến</label><input className="form-control" value={form.toName} onChange={(e) => setForm((c) => ({ ...c, toName: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Loại điểm đến</label><input className="form-control" value={form.toType} onChange={(e) => setForm((c) => ({ ...c, toType: e.target.value }))} /></div>
       </div>
-      <div className="form-group"><label className="form-label">Dia chi diem den</label><input className="form-control" value={form.toAddress} onChange={(e) => setForm((c) => ({ ...c, toAddress: e.target.value }))} /></div>
+      <div className="form-group"><label className="form-label">Địa chỉ điểm đến</label><input className="form-control" value={form.toAddress} onChange={(e) => setForm((c) => ({ ...c, toAddress: e.target.value }))} /></div>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">Khoang cach km</label><input className="form-control" type="number" min="0" value={form.distanceKm} onChange={(e) => setForm((c) => ({ ...c, distanceKm: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Thoi gian du kien phut</label><input className="form-control" type="number" min="0" value={form.estimatedDurationMinutes} onChange={(e) => setForm((c) => ({ ...c, estimatedDurationMinutes: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trang thai</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoat dong</option><option value="inactive">Khong hoat dong</option></select></div>
+        <div className="form-group"><label className="form-label">Khoảng cách km</label><input className="form-control" type="number" min="0" value={form.distanceKm} onChange={(e) => setForm((c) => ({ ...c, distanceKm: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Thời gian dự kiến phút</label><input className="form-control" type="number" min="0" value={form.estimatedDurationMinutes} onChange={(e) => setForm((c) => ({ ...c, estimatedDurationMinutes: e.target.value }))} /></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
       </div>
     </>
   );
@@ -132,7 +132,7 @@ function PickupManagementModal({ open, routeItem, onClose }) {
     setLoading(true);
     const { ok, data } = await adminAPI(`/admin/transport/routes/${routeItem.RouteId}/pickups`);
     if (ok) setRows(data.data || []);
-    else showToast(data.message || 'Khong the tai diem don.', 'error');
+    else showToast(data.message || 'Không thể tải điểm đón.', 'error');
     setLoading(false);
   };
 
@@ -153,28 +153,28 @@ function PickupManagementModal({ open, routeItem, onClose }) {
     const method = editingItem ? 'PUT' : 'POST';
     const { ok, data } = await adminAPI(endpoint, { method, body: JSON.stringify(form) });
     setSubmitting(false);
-    if (!ok) return showToast(data.message || 'Khong the luu diem don.', 'error');
-    showToast(editingItem ? 'Cap nhat diem don thanh cong.' : 'Them diem don thanh cong.', 'success');
+    if (!ok) return showToast(data.message || 'Không thể lưu điểm đón.', 'error');
+    showToast(editingItem ? 'Cập nhật điểm đón thành công.' : 'Thêm điểm đón thành công.', 'success');
     resetForm();
     loadRows();
   };
 
   const handleDelete = async (item) => {
-    if (!window.confirm(`Xoa diem don "${item.name}"?`)) return;
+    if (!window.confirm(`Xóa điểm đón "${item.name}"?`)) return;
     const { ok, data } = await adminAPI(`/admin/transport/pickups/${item._id}`, { method: 'DELETE' });
-    if (!ok) return showToast(data.message || 'Khong the xoa diem don.', 'error');
-    showToast('Xoa diem don thanh cong.', 'success');
+    if (!ok) return showToast(data.message || 'Không thể xóa điểm đón.', 'error');
+    showToast('Xóa điểm đón thành công.', 'success');
     loadRows();
   };
 
   return (
-    <AdminModal open={open} title={`Diem don - ${routeItem?.Name || ''}`} onClose={onClose} maxWidth={980} footer={<button type="button" className="btn btn-outline" onClick={onClose}>Dong</button>}>
+    <AdminModal open={open} title={`Điểm đón - ${routeItem?.Name || ''}`} onClose={onClose} maxWidth={980} footer={<button type="button" className="btn btn-outline" onClick={onClose}>Đóng</button>}>
       <ToastContainer />
       {loading ? <div className="loading-spinner"><div className="spinner" /></div> : (
         <div className="admin-stack">
           <div className="table-wrap">
             <table>
-              <thead><tr><th>Ma</th><th>Ten</th><th>Dia chi</th><th>Lech phut</th><th>Trang thai</th><th>Thao tac</th></tr></thead>
+              <thead><tr><th>Mã</th><th>Tên</th><th>Địa chỉ</th><th>Lệch phút</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
               <tbody>
                 {rows.length ? rows.map((item) => (
                   <tr key={item._id}>
@@ -183,23 +183,23 @@ function PickupManagementModal({ open, routeItem, onClose }) {
                     <td>{item.address || '-'}</td>
                     <td>{item.pickupTimeOffsetMinutes || 0}</td>
                     <td><AdminStatusBadge status={item.status} /></td>
-                    <td><div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => { setEditingItem(item); setForm({ code: item.code || '', name: item.name || '', address: item.address || '', pickupTimeOffsetMinutes: item.pickupTimeOffsetMinutes || 0, status: item.status || 'active' }); }}>Sua</button><button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)}>Xoa</button></div></td>
+                    <td><div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => { setEditingItem(item); setForm({ code: item.code || '', name: item.name || '', address: item.address || '', pickupTimeOffsetMinutes: item.pickupTimeOffsetMinutes || 0, status: item.status || 'active' }); }}>Sửa</button><button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)}>Xóa</button></div></td>
                   </tr>
-                )) : <tr><td colSpan="6">Chua co diem don.</td></tr>}
+                )) : <tr><td colSpan="6">Chưa có điểm đón.</td></tr>}
               </tbody>
             </table>
           </div>
           <form className="admin-inline-form" onSubmit={handleSubmit}>
             <div className="form-row-3">
-              <div className="form-group"><label className="form-label">Ma</label><input className="form-control" value={form.code} onChange={(e) => setForm((c) => ({ ...c, code: e.target.value }))} /></div>
-              <div className="form-group"><label className="form-label">Ten</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
-              <div className="form-group"><label className="form-label">Lech phut</label><input className="form-control" type="number" min="0" value={form.pickupTimeOffsetMinutes} onChange={(e) => setForm((c) => ({ ...c, pickupTimeOffsetMinutes: e.target.value }))} /></div>
+              <div className="form-group"><label className="form-label">Mã</label><input className="form-control" value={form.code} onChange={(e) => setForm((c) => ({ ...c, code: e.target.value }))} /></div>
+              <div className="form-group"><label className="form-label">Tên</label><input className="form-control" value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required /></div>
+              <div className="form-group"><label className="form-label">Lệch phút</label><input className="form-control" type="number" min="0" value={form.pickupTimeOffsetMinutes} onChange={(e) => setForm((c) => ({ ...c, pickupTimeOffsetMinutes: e.target.value }))} /></div>
             </div>
             <div className="form-row">
-              <div className="form-group"><label className="form-label">Dia chi</label><input className="form-control" value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} /></div>
-              <div className="form-group"><label className="form-label">Trang thai</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoat dong</option><option value="inactive">Khong hoat dong</option></select></div>
+              <div className="form-group"><label className="form-label">Địa chỉ</label><input className="form-control" value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} /></div>
+              <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
             </div>
-            <div className="admin-inline-actions">{editingItem ? <button type="button" className="btn btn-outline" onClick={resetForm}>Huy sua</button> : null}<button type="submit" className="btn btn-primary" disabled={submitting}>{submitting ? 'Dang luu...' : 'Luu diem don'}</button></div>
+            <div className="admin-inline-actions">{editingItem ? <button type="button" className="btn btn-outline" onClick={resetForm}>Hủy sửa</button> : null}<button type="submit" className="btn btn-primary" disabled={submitting}>{submitting ? 'Đang lưu...' : 'Lưu điểm đón'}</button></div>
           </form>
         </div>
       )}
@@ -210,82 +210,82 @@ function PickupManagementModal({ open, routeItem, onClose }) {
 function getModuleConfig(pageKey, providers) {
   const configs = {
     providers: {
-      title: 'Nha cung cap',
-      subtitle: 'Quan ly doi tac van tai',
+      title: 'Nhà cung cấp',
+      subtitle: 'Quản lý đối tác vận tải',
       endpoint: '/admin/transport/providers',
       filters: ['status'],
-      createLabel: 'Them nha cung cap',
-      emptyTitle: 'Chua co nha cung cap',
+      createLabel: 'Thêm nhà cung cấp',
+      emptyTitle: 'Chưa có nhà cung cấp',
       initialForm: { name: '', type: 'company', serviceTypes: '', contactPersonName: '', contactPhone: '', contactEmail: '', contactAddress: '', status: 'active' },
       renderForm: ProviderForm,
       mapItemToForm: (item) => ({ name: item.Name || '', type: item.Type || 'company', serviceTypes: item.ServiceTypes || '', contactPersonName: item.ContactPersonName || '', contactPhone: item.ContactPhone || '', contactEmail: item.ContactEmail || '', contactAddress: item.ContactAddress || '', status: item.Status || 'active' }),
       columns: (openEdit, setDeleteTarget) => [
-        ['Ten', (item) => <><div className="admin-cell-title">{item.Name}</div><div className="admin-cell-subtitle">{item.ContactPersonName || '-'}</div></>],
-        ['Loai', (item) => item.Type || '-'],
-        ['So xe', (item) => item.VehicleCount || 0],
-        ['Trang thai', (item) => <AdminStatusBadge status={item.Status} />],
-        ['Thao tac', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sua</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Luu tru</button></div>],
+        ['Tên', (item) => <><div className="admin-cell-title">{item.Name}</div><div className="admin-cell-subtitle">{item.ContactPersonName || '-'}</div></>],
+        ['Loại', (item) => item.Type || '-'],
+        ['Số xe', (item) => item.VehicleCount || 0],
+        ['Trạng thái', (item) => <AdminStatusBadge status={item.Status} />],
+        ['Thao tác', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sửa</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Lưu trữ</button></div>],
       ],
       getId: (item) => item.ProviderId,
       getName: (item) => item.Name,
     },
     vehicles: {
-      title: 'Quan ly Xe',
-      subtitle: 'Quan ly tai san va doi xe',
+      title: 'Quản lý xe',
+      subtitle: 'Quản lý tài sản và đội xe',
       endpoint: '/admin/transport/vehicles',
       filters: ['status', 'provider'],
-      createLabel: 'Them xe',
-      emptyTitle: 'Chua co xe',
+      createLabel: 'Thêm xe',
+      emptyTitle: 'Chưa có xe',
       initialForm: { providerId: '', vehicleCode: '', plateNumber: '', type: '', brand: '', model: '', seatCapacity: 0, amenities: '', imageUrl: '', status: 'available' },
       renderForm: (props) => <VehicleForm {...props} providers={providers} />,
       mapItemToForm: (item) => ({ providerId: item.ProviderId || '', vehicleCode: item.VehicleCode || '', plateNumber: item.PlateNumber || '', type: item.Type || '', brand: item.Brand || '', model: item.Model || '', seatCapacity: item.SeatCapacity || 0, amenities: item.Amenities || '', imageUrl: item.ImageUrl || '', status: item.Status || 'available' }),
       columns: (openEdit, setDeleteTarget) => [
-        ['Bien so', (item) => <><div className="admin-cell-title">{item.PlateNumber}</div><div className="admin-cell-subtitle">{item.ProviderName || '-'}</div></>],
-        ['Loai', (item) => item.Type || '-'],
-        ['So ghe', (item) => item.SeatCapacity || 0],
-        ['Trang thai', (item) => <AdminStatusBadge status={item.Status} />],
-        ['Thao tac', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sua</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Luu tru</button></div>],
+        ['Biển số', (item) => <><div className="admin-cell-title">{item.PlateNumber}</div><div className="admin-cell-subtitle">{item.ProviderName || '-'}</div></>],
+        ['Loại', (item) => item.Type || '-'],
+        ['Số ghế', (item) => item.SeatCapacity || 0],
+        ['Trạng thái', (item) => <AdminStatusBadge status={item.Status} />],
+        ['Thao tác', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sửa</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Lưu trữ</button></div>],
       ],
       getId: (item) => item.VehicleId,
       getName: (item) => item.PlateNumber,
     },
     drivers: {
-      title: 'Tai xe',
-      subtitle: 'Quan ly nhan su van hanh',
+      title: 'Tài xế',
+      subtitle: 'Quản lý nhân sự vận hành',
       endpoint: '/admin/transport/drivers',
       filters: ['status', 'provider'],
-      createLabel: 'Them tai xe',
-      emptyTitle: 'Chua co tai xe',
+      createLabel: 'Thêm tài xế',
+      emptyTitle: 'Chưa có tài xế',
       initialForm: { providerId: '', fullName: '', phone: '', email: '', licenseNumber: '', licenseClass: '', experienceYears: 0, status: 'available' },
       renderForm: (props) => <DriverForm {...props} providers={providers} />,
       mapItemToForm: (item) => ({ providerId: item.ProviderId || '', fullName: item.FullName || '', phone: item.Phone || '', email: item.Email || '', licenseNumber: item.LicenseNumber || '', licenseClass: item.LicenseClass || '', experienceYears: item.ExperienceYears || 0, status: item.Status || 'available' }),
       columns: (openEdit, setDeleteTarget) => [
-        ['Ten', (item) => <><div className="admin-cell-title">{item.FullName}</div><div className="admin-cell-subtitle">{item.ProviderName || '-'}</div></>],
-        ['Dien thoai', (item) => item.Phone || '-'],
+        ['Tên', (item) => <><div className="admin-cell-title">{item.FullName}</div><div className="admin-cell-subtitle">{item.ProviderName || '-'}</div></>],
+        ['Điện thoại', (item) => item.Phone || '-'],
         ['GPLX', (item) => item.LicenseNumber || '-'],
-        ['Trang thai', (item) => <AdminStatusBadge status={item.Status} />],
-        ['Thao tac', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sua</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Luu tru</button></div>],
+        ['Trạng thái', (item) => <AdminStatusBadge status={item.Status} />],
+        ['Thao tác', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sửa</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Lưu trữ</button></div>],
       ],
       getId: (item) => item.DriverId,
       getName: (item) => item.FullName,
     },
     routes: {
-      title: 'Tuyen duong',
-      subtitle: 'Quan ly route va diem don',
+      title: 'Tuyến đường',
+      subtitle: 'Quản lý route và điểm đón',
       endpoint: '/admin/transport/routes',
       filters: ['status'],
-      createLabel: 'Them tuyen duong',
-      emptyTitle: 'Chua co tuyen duong',
+      createLabel: 'Thêm tuyến đường',
+      emptyTitle: 'Chưa có tuyến đường',
       initialForm: { routeCode: '', name: '', fromName: '', fromType: '', fromAddress: '', toName: '', toType: '', toAddress: '', distanceKm: 0, estimatedDurationMinutes: 0, status: 'active' },
       renderForm: RouteForm,
       mapItemToForm: (item) => ({ routeCode: item.RouteCode || '', name: item.Name || '', fromName: item.FromName || '', fromType: item.FromType || '', fromAddress: item.FromAddress || '', toName: item.ToName || '', toType: item.ToType || '', toAddress: item.ToAddress || '', distanceKm: item.DistanceKm || 0, estimatedDurationMinutes: item.EstimatedDurationMinutes || 0, status: item.Status || 'active' }),
       columns: (openEdit, setDeleteTarget, openExtra) => [
-        ['Tuyen', (item) => <><div className="admin-cell-title">{item.Name}</div><div className="admin-cell-subtitle">{item.RouteCode}</div></>],
-        ['Diem di', (item) => item.FromName || '-'],
-        ['Diem den', (item) => item.ToName || '-'],
-        ['Diem don', (item) => item.PickupCount || 0],
-        ['Trang thai', (item) => <AdminStatusBadge status={item.Status} />],
-        ['Thao tac', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-success btn-sm" onClick={() => openExtra(item)}>Quan ly diem don</button><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sua</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Luu tru</button></div>],
+        ['Tuyến', (item) => <><div className="admin-cell-title">{item.Name}</div><div className="admin-cell-subtitle">{item.RouteCode}</div></>],
+        ['Điểm đi', (item) => item.FromName || '-'],
+        ['Điểm đến', (item) => item.ToName || '-'],
+        ['Điểm đón', (item) => item.PickupCount || 0],
+        ['Trạng thái', (item) => <AdminStatusBadge status={item.Status} />],
+        ['Thao tác', (item) => <div className="admin-inline-actions"><button type="button" className="btn btn-success btn-sm" onClick={() => openExtra(item)}>Quản lý điểm đón</button><button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(item)}>Sửa</button><button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(item)}>Lưu trữ</button></div>],
       ],
       getId: (item) => item.RouteId,
       getName: (item) => item.Name,
@@ -314,7 +314,7 @@ export function TransportManagementPage({ pageKey }) {
   const loadLookups = async () => {
     const { ok, data } = await adminAPI('/admin/transport/lookups');
     if (ok) setLookups(data.data || { providers: [] });
-    else showToast(data.message || 'Khong the tai lookup van tai.', 'error');
+    else showToast(data.message || 'Không thể tải dữ liệu vận tải.', 'error');
   };
 
   const { rows, pagination, loading, reload } = useAdminList(async () => {
@@ -324,7 +324,7 @@ export function TransportManagementPage({ pageKey }) {
     if (filters.providerId && pageKey !== 'providers' && pageKey !== 'routes') params.set('providerId', filters.providerId);
     const { ok, data } = await adminAPI(`${config.endpoint}?${params.toString()}`);
     if (!ok) {
-      showToast(data.message || 'Khong the tai du lieu van tai.', 'error');
+      showToast(data.message || 'Không thể tải dữ liệu vận tải.', 'error');
       return { rows: [], pagination: { total: 0, page: 1, limit: 10, totalPages: 1 } };
     }
     return { rows: data.data || [], pagination: data.pagination || { total: 0, page: 1, limit: 10, totalPages: 1 } };
@@ -351,8 +351,8 @@ export function TransportManagementPage({ pageKey }) {
     const method = editingItem ? 'PUT' : 'POST';
     const { ok, data } = await adminAPI(endpoint, { method, body: JSON.stringify(form) });
     setSubmitting(false);
-    if (!ok) return showToast(data.message || 'Khong the luu du lieu.', 'error');
-    showToast(editingItem ? 'Cap nhat thanh cong.' : 'Tao moi thanh cong.', 'success');
+    if (!ok) return showToast(data.message || 'Không thể lưu dữ liệu.', 'error');
+    showToast(editingItem ? 'Cập nhật thành công.' : 'Tạo mới thành công.', 'success');
     setFormOpen(false);
     reload();
     loadLookups();
@@ -363,8 +363,8 @@ export function TransportManagementPage({ pageKey }) {
     setDeleteLoading(true);
     const { ok, data } = await adminAPI(`${config.endpoint}/${config.getId(deleteTarget)}`, { method: 'DELETE' });
     setDeleteLoading(false);
-    if (!ok) return showToast(data.message || 'Khong the xoa.', 'error');
-    showToast('Cap nhat trang thai thanh cong.', 'success');
+    if (!ok) return showToast(data.message || 'Không thể cập nhật trạng thái.', 'error');
+    showToast('Cập nhật trạng thái thành công.', 'success');
     setDeleteTarget(null);
     reload();
     loadLookups();
@@ -384,20 +384,20 @@ export function TransportManagementPage({ pageKey }) {
         <div className="card-body">
           <div className="data-controls">
             <form className="admin-filter-form" onSubmit={(event) => { event.preventDefault(); setFilters((current) => ({ ...current, search: draftSearch.trim(), page: 1 })); }}>
-              <div className="search-input"><i className="fas fa-search" /><input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tim kiem..." /></div>
+              <div className="search-input"><i className="fas fa-search" /><input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tìm kiếm..." /></div>
               <select className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}>
-                <option value="">Tat ca trang thai</option>
-                <option value="active">Hoat dong</option>
-                <option value="available">San sang</option>
-                <option value="inactive">Khong hoat dong</option>
+                <option value="">Tất cả trạng thái</option>
+                <option value="active">Hoạt động</option>
+                <option value="available">Sẵn sàng</option>
+                <option value="inactive">Không hoạt động</option>
               </select>
               {config.filters.includes('provider') ? (
                 <select className="filter-select" value={filters.providerId} onChange={(event) => setFilters((current) => ({ ...current, providerId: event.target.value, page: 1 }))}>
-                  <option value="">Tat ca nha cung cap</option>
+                  <option value="">Tất cả nhà cung cấp</option>
                   {(lookups.providers || []).map((item) => <option key={item.ProviderId} value={item.ProviderId}>{item.Name}</option>)}
                 </select>
               ) : null}
-              <button type="submit" className="btn btn-outline">Loc</button>
+              <button type="submit" className="btn btn-outline">Lọc</button>
             </form>
           </div>
           {loading ? <div className="loading-spinner"><div className="spinner" /></div> : rows.length ? (
@@ -416,15 +416,15 @@ export function TransportManagementPage({ pageKey }) {
               </div>
               <AdminPagination pagination={pagination} onPageChange={(page) => setFilters((current) => ({ ...current, page }))} />
             </>
-          ) : <AdminEmptyState icon="fa-bus" title={config.emptyTitle} description="Chua co du lieu phu hop voi bo loc hien tai." />}
+          ) : <AdminEmptyState icon="fa-bus" title={config.emptyTitle} description="Chưa có dữ liệu phù hợp với bộ lọc hiện tại." />}
         </div>
       </div>
 
       <AdminModal
         open={formOpen}
-        title={editingItem ? `Cap nhat ${config.title.toLowerCase()}` : config.createLabel}
+        title={editingItem ? `Cập nhật ${config.title.toLowerCase()}` : config.createLabel}
         onClose={() => setFormOpen(false)}
-        footer={<><button type="button" className="btn btn-outline" onClick={() => setFormOpen(false)} disabled={submitting}>Dong</button><button type="submit" form={`transport-form-${pageKey}`} className="btn btn-primary" disabled={submitting}>{submitting ? 'Dang luu...' : 'Luu'}</button></>}
+        footer={<><button type="button" className="btn btn-outline" onClick={() => setFormOpen(false)} disabled={submitting}>Đóng</button><button type="submit" form={`transport-form-${pageKey}`} className="btn btn-primary" disabled={submitting}>{submitting ? 'Đang lưu...' : 'Lưu'}</button></>}
       >
         <form id={`transport-form-${pageKey}`} onSubmit={handleSubmit}>
           <FormComponent form={form} setForm={setForm} />
@@ -433,8 +433,8 @@ export function TransportManagementPage({ pageKey }) {
 
       <AdminConfirmDialog
         open={Boolean(deleteTarget)}
-        title="Xac nhan luu tru"
-        message={`Ban sap luu tru "${deleteTarget ? config.getName(deleteTarget) : ''}". Ban co muon tiep tuc?`}
+        title="Xác nhận lưu trữ"
+        message={`Bạn sắp lưu trữ "${deleteTarget ? config.getName(deleteTarget) : ''}". Bạn có muốn tiếp tục?`}
         loading={deleteLoading}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDelete}
