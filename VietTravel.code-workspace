@@ -1,0 +1,100 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "🌏 VietTravel - Root"
+    },
+    {
+      "path": "backend",
+      "name": "🚀 Backend (Node.js)"
+    },
+    {
+      "path": "frontend",
+      "name": "🎨 Frontend (Khách hàng)"
+    },
+    {
+      "path": "admin",
+      "name": "⚙️ Admin Panel"
+    }
+  ],
+  "settings": {
+    "editor.fontSize": 14,
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.eol": "\n",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.wordWrap": "on",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+      "*.html": "${capture}.css, ${capture}.js",
+      "package.json": "package-lock.json, .env, .env.example"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-js-profile-flame",
+      "formulahendry.auto-rename-tag",
+      "ritwickdey.liveserver",
+      "ms-mssql.mssql",
+      "pkief.material-icon-theme"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🚀 Start Backend Server",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder:🚀 Backend (Node.js)}/server.js",
+        "cwd": "${workspaceFolder:🚀 Backend (Node.js)}",
+        "env": {},
+        "envFile": "${workspaceFolder:🚀 Backend (Node.js)}/.env",
+        "console": "integratedTerminal",
+        "restart": false
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🚀 Start VietTravel Server",
+        "type": "shell",
+        "command": "node server.js",
+        "options": {
+          "cwd": "${workspaceFolder:🚀 Backend (Node.js)}"
+        },
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "🔑 Generate Password Hashes",
+        "type": "shell",
+        "command": "node generate_hashes.js",
+        "options": {
+          "cwd": "${workspaceFolder:🌏 VietTravel - Root}"
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+}
