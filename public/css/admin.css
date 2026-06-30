@@ -1,8 +1,6 @@
 /* ===================================================
    VietTravel Admin Panel CSS
    =================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 :root {
   --sidebar-bg: #0f172a;
   --sidebar-width: 260px;
@@ -25,7 +23,7 @@
   --shadow: 0 2px 12px rgba(0,0,0,0.08);
   --shadow-md: 0 4px 24px rgba(0,0,0,0.12);
   --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-  --font: 'Inter', sans-serif;
+  --font: 'Be Vietnam Pro', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 html.dark-theme {

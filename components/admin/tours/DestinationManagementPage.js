@@ -7,6 +7,7 @@ import AdminEmptyState from '../common/AdminEmptyState';
 import AdminModal from '../common/AdminModal';
 import AdminPagination from '../common/AdminPagination';
 import AdminStatusBadge from '../common/AdminStatusBadge';
+import CustomSelect from '../../common/CustomSelect';
 
 function getInitialFormState(item) {
   return {
@@ -117,11 +118,17 @@ export default function DestinationManagementPage() {
                 <i className="fas fa-search" />
                 <input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tìm tên, slug, tỉnh thành..." />
               </div>
-              <select className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}>
-                <option value="">Tất cả trạng thái</option>
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Không hoạt động</option>
-              </select>
+              <CustomSelect
+                className="filter-select"
+                value={filters.status}
+                onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}
+                options={[
+                  { value: '', label: 'Tất cả trạng thái' },
+                  { value: 'active', label: 'Hoạt động' },
+                  { value: 'inactive', label: 'Không hoạt động' },
+                ]}
+                placeholder="Tất cả trạng thái"
+              />
               <button type="submit" className="btn btn-outline">Lọc</button>
             </form>
           </div>
@@ -210,10 +217,15 @@ export default function DestinationManagementPage() {
             </div>
             <div className="form-group">
               <label className="form-label">Trạng thái</label>
-              <select className="form-select" value={form.status} onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}>
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Không hoạt động</option>
-              </select>
+              <CustomSelect
+                className="admin-select"
+                value={form.status}
+                onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}
+                options={[
+                  { value: 'active', label: 'Hoạt động' },
+                  { value: 'inactive', label: 'Không hoạt động' },
+                ]}
+              />
             </div>
           </div>
           <div className="form-group">

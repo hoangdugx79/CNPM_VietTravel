@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminModal from '../common/AdminModal';
+import CustomSelect from '../../common/CustomSelect';
 
 function createInitialFormState(initialData) {
   return {
@@ -88,12 +89,18 @@ export default function TourFormModal({
           </div>
           <div className="form-group">
             <label className="form-label">Trạng thái</label>
-            <select className="form-select" name="status" value={form.status} onChange={handleChange}>
-              <option value="draft">Nháp</option>
-              <option value="active">Hoạt động</option>
-              <option value="inactive">Tạm dừng</option>
-              <option value="archived">Lưu trữ</option>
-            </select>
+            <CustomSelect
+              className="admin-select"
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+              options={[
+                { value: 'draft', label: 'Nháp' },
+                { value: 'active', label: 'Hoạt động' },
+                { value: 'inactive', label: 'Tạm dừng' },
+                { value: 'archived', label: 'Lưu trữ' },
+              ]}
+            />
           </div>
           <div className="form-group">
             <label className="form-label">Slug</label>

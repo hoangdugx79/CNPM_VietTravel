@@ -56,13 +56,33 @@ nextApp.prepare().then(async () => {
   await connectDB();
 
   const app = express();
+  app.disable('x-powered-by');
 
   app.use(cors({ origin: '*', credentials: true }));
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true }));
-  app.use(morgan('dev'));
+  app.use(morgan(dev ? 'dev' : 'combined', {
+    skip: (req, res) => (
+      (req.path.startsWith('/uploads/') && res.statusCode === 304)
+      || req.path === '/.well-known/appspecific/com.chrome.devtools.json'
+    ),
+  }));
 
-  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+    etag: true,
+    lastModified: true,
+    maxAge: dev ? '1h' : '30d',
+    setHeaders: (res, filePath) => {
+      const isImage = /\.(avif|gif|jpe?g|png|svg|webp)$/i.test(filePath);
+      const isVideo = /\.(mp4|webm|ogg)$/i.test(filePath);
+
+      if (isImage || isVideo) {
+        res.setHeader('Cache-Control', dev
+          ? 'public, max-age=3600, stale-while-revalidate=86400'
+          : 'public, max-age=2592000, stale-while-revalidate=604800');
+      }
+    },
+  }));
   app.use(legacyRedirect);
 
   registerRoutes(app);
@@ -78,7 +98,8 @@ nextApp.prepare().then(async () => {
   });
 
   const server = app.listen(config.port, () => {
-    const port = server.address().port;
+    const addr = server.address();
+    const port = addr && typeof addr === 'object' ? addr.port : config.port;
     console.log(`
 ╔════════════════════════════════════════════╗
 ║   🌏 Travel Tour System - Server Started   ║

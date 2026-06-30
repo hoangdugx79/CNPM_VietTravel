@@ -7,9 +7,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
-    "seed": "node scripts/seed-mongodb.js",
-    "convert-webp": "node scripts/convert-uploads-webp.js",
-    "add-hue-tour": "node scripts/add-hue-tour.js"
+    "seed": "node scripts/seed-mongodb.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +15,7 @@
   "dependencies": {
     "@google/genai": "^2.10.0",
     "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
@@ -28,12 +27,13 @@
     "morgan": "^1.11.0",
     "multer": "^2.2.0",
     "next": "^14.2.35",
+    "process": "^0.11.10",
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "^18.3.1",
     "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "sharp": "^0.35.2"
+    "cross-env": "^7.0.3"
   }
 }

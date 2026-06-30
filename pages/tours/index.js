@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CustomerLayout from '../../components/customer/Layout';
 import TourCard from '../../components/customer/TourCard';
+import CustomSelect from '../../components/common/CustomSelect';
 import { apiRequest } from '../../lib/api';
 
 export default function ToursPage() {
@@ -9,7 +10,13 @@ export default function ToursPage() {
   const [tours, setTours] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1, totalPages: 1 });
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState('newest');
+  const sort = typeof router.query.sort === 'string' ? router.query.sort : 'newest';
+  const sortOptions = [
+    { value: 'newest', label: 'Mới nhất', description: 'Ưu tiên tour vừa được cập nhật' },
+    { value: 'price_asc', label: 'Giá thấp → cao', description: 'Phù hợp khi tối ưu ngân sách' },
+    { value: 'price_desc', label: 'Giá cao → thấp', description: 'Ưu tiên tour cao cấp trước' },
+    { value: 'rating', label: 'Đánh giá cao', description: 'Ưu tiên tour được yêu thích' },
+  ];
 
   const loadTours = async (page = 1) => {
     setLoading(true);
@@ -42,12 +49,20 @@ export default function ToursPage() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
             <span className="tours-count">Tìm thấy {pagination.total} tour</span>
-            <select className="sort-select" value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="newest">Mới nhất</option>
-              <option value="price_asc">Giá thấp → cao</option>
-              <option value="price_desc">Giá cao → thấp</option>
-              <option value="rating">Đánh giá cao</option>
-            </select>
+            <CustomSelect
+              className="sort-select"
+              value={sort}
+              options={sortOptions}
+              placeholder="Chọn cách sắp xếp"
+              onChange={(event) => router.push({
+                pathname: '/tours',
+                query: {
+                  ...router.query,
+                  sort: event.target.value,
+                  page: 1,
+                },
+              })}
+            />
           </div>
           <div className="tours-grid">
             {loading ? <div className="loader" style={{ gridColumn: '1/-1', margin: '40px auto' }} /> : tours.length ? tours.map((t) => <TourCard key={t.TourId} tour={t} />) : <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: 40 }}>Không có tour nào</p>}

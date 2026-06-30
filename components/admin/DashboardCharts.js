@@ -78,7 +78,7 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
           usePointStyle: true,
           color: '#64748b',
           font: {
-            family: 'Inter',
+            family: 'Be Vietnam Pro',
             size: 12,
             weight: '600',
           },
@@ -152,7 +152,7 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
           padding: 16,
           color: '#64748b',
           font: {
-            family: 'Inter',
+            family: 'Be Vietnam Pro',
             size: 12,
             weight: '600',
           },

@@ -4,6 +4,7 @@ import { formatCurrency, formatDate } from '../../../lib/format';
 import { useToast } from '../../Toast';
 import AdminModal from '../common/AdminModal';
 import AdminStatusBadge from '../common/AdminStatusBadge';
+import CustomSelect from '../../common/CustomSelect';
 
 function toDateInputValue(value) {
   if (!value) return '';
@@ -406,11 +407,16 @@ export default function TourDetailModal({ open, tourId, onClose, onUpdated }) {
                 </div>
                 <div className="form-group">
                   <label className="form-label">Trạng thái</label>
-                  <select className="form-select" value={departureForm.status} onChange={(event) => setDepartureForm((current) => ({ ...current, status: event.target.value }))}>
-                    <option value="open">Mở bán</option>
-                    <option value="closed">Đóng bán</option>
-                    <option value="cancelled">Đã hủy</option>
-                  </select>
+                  <CustomSelect
+                    className="admin-select"
+                    value={departureForm.status}
+                    onChange={(event) => setDepartureForm((current) => ({ ...current, status: event.target.value }))}
+                    options={[
+                      { value: 'open', label: 'Mở bán' },
+                      { value: 'closed', label: 'Đóng bán' },
+                      { value: 'cancelled', label: 'Đã hủy' },
+                    ]}
+                  />
                 </div>
               </div>
               <div className="admin-inline-actions">

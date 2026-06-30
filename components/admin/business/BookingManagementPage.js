@@ -7,6 +7,7 @@ import AdminEmptyState from '../common/AdminEmptyState';
 import AdminModal from '../common/AdminModal';
 import AdminPagination from '../common/AdminPagination';
 import AdminStatusBadge from '../common/AdminStatusBadge';
+import CustomSelect from '../../common/CustomSelect';
 
 export default function BookingManagementPage() {
   const { showToast, ToastContainer } = useToast();
@@ -72,19 +73,31 @@ export default function BookingManagementPage() {
           <div className="data-controls">
             <form className="admin-filter-form" onSubmit={(event) => { event.preventDefault(); setFilters((current) => ({ ...current, search: draftSearch.trim(), page: 1 })); }}>
               <div className="search-input"><i className="fas fa-search" /><input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Mã booking, tên khách, SĐT..." /></div>
-              <select className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}>
-                <option value="">Tất cả trạng thái booking</option>
-                <option value="pending">Chờ xử lý</option>
-                <option value="confirmed">Đã xác nhận</option>
-                <option value="cancelled">Đã hủy</option>
-                <option value="completed">Hoàn thành</option>
-              </select>
-              <select className="filter-select" value={filters.paymentStatus} onChange={(event) => setFilters((current) => ({ ...current, paymentStatus: event.target.value, page: 1 }))}>
-                <option value="">Tất cả trạng thái thanh toán</option>
-                <option value="unpaid">Chưa thanh toán</option>
-                <option value="partial">Thanh toán một phần</option>
-                <option value="paid">Đã thanh toán</option>
-              </select>
+              <CustomSelect
+                className="filter-select"
+                value={filters.status}
+                onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}
+                options={[
+                  { value: '', label: 'Tất cả trạng thái booking' },
+                  { value: 'pending', label: 'Chờ xử lý' },
+                  { value: 'confirmed', label: 'Đã xác nhận' },
+                  { value: 'cancelled', label: 'Đã hủy' },
+                  { value: 'completed', label: 'Hoàn thành' },
+                ]}
+                placeholder="Tất cả trạng thái booking"
+              />
+              <CustomSelect
+                className="filter-select"
+                value={filters.paymentStatus}
+                onChange={(event) => setFilters((current) => ({ ...current, paymentStatus: event.target.value, page: 1 }))}
+                options={[
+                  { value: '', label: 'Tất cả trạng thái thanh toán' },
+                  { value: 'unpaid', label: 'Chưa thanh toán' },
+                  { value: 'partial', label: 'Thanh toán một phần' },
+                  { value: 'paid', label: 'Đã thanh toán' },
+                ]}
+                placeholder="Tất cả trạng thái thanh toán"
+              />
               <button type="submit" className="btn btn-outline">Lọc</button>
             </form>
           </div>

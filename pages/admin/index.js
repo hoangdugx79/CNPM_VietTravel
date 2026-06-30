@@ -85,6 +85,38 @@ export default function AdminDashboard() {
           </table>
         </div>
       )}
+
+      {data?.recentContactLeads?.length > 0 && (
+        <div className="card" style={{ marginTop: 24, background: '#fff', borderRadius: 16, padding: 24 }}>
+          <h3 style={{ marginBottom: 16 }}>Đăng ký nhận ưu đãi đặc biệt</h3>
+          <table className="data-table" style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Điện thoại</th>
+                <th>Mã khuyến mãi</th>
+                <th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.recentContactLeads.map((lead) => (
+                <tr key={lead.LeadId}>
+                  <td><strong>{lead.FullName}</strong></td>
+                  <td>{lead.Email}</td>
+                  <td>{lead.Phone}</td>
+                  <td>
+                    <span style={{ background: '#fef3c7', color: '#d97706', padding: '3px 8px', borderRadius: 6, fontSize: 12, fontWeight: 600 }}>
+                      {lead.PromoCode}
+                    </span>
+                  </td>
+                  <td>{new Date(lead.CreatedAt).toLocaleString('vi-VN')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </AdminLayout>
   );
 }

@@ -41,4 +41,25 @@ router.get('/:tourId/transport/:departureId', async (req, res) => {
   }
 });
 
+router.post('/contact', async (req, res) => {
+  try {
+    const { fullName, email, phone, promoCode } = req.body;
+    if (!fullName || !email) {
+      return res.status(400).json({ success: false, message: 'Vui lòng điền đầy đủ họ tên và email.' });
+    }
+    const { ContactLead } = require('../models');
+    const newLead = new ContactLead({
+      fullName,
+      email,
+      phone,
+      promoCode,
+    });
+    await newLead.save();
+    res.json({ success: true, message: 'Đăng ký nhận ưu đãi thành công!' });
+  } catch (err) {
+    console.error('Submit contact lead error:', err);
+    res.status(500).json({ success: false, message: 'Lỗi hệ thống khi gửi liên hệ.' });
+  }
+});
+
 module.exports = router;

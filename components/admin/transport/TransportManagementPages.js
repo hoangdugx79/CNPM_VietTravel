@@ -7,6 +7,7 @@ import AdminEmptyState from '../common/AdminEmptyState';
 import AdminModal from '../common/AdminModal';
 import AdminPagination from '../common/AdminPagination';
 import AdminStatusBadge from '../common/AdminStatusBadge';
+import CustomSelect from '../../common/CustomSelect';
 
 function useAdminList(loadFn, deps) {
   const [rows, setRows] = useState([]);
@@ -41,7 +42,7 @@ function ProviderForm({ form, setForm }) {
       </div>
       <div className="form-row">
         <div className="form-group"><label className="form-label">Email</label><input className="form-control" value={form.contactEmail} onChange={(e) => setForm((c) => ({ ...c, contactEmail: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><CustomSelect className="admin-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))} options={[{ value: 'active', label: 'Hoạt động' }, { value: 'inactive', label: 'Không hoạt động' }]} /></div>
       </div>
       <div className="form-group"><label className="form-label">Loại dịch vụ</label><input className="form-control" value={form.serviceTypes} onChange={(e) => setForm((c) => ({ ...c, serviceTypes: e.target.value }))} /></div>
       <div className="form-group"><label className="form-label">Địa chỉ</label><textarea className="form-control" rows="3" value={form.contactAddress} onChange={(e) => setForm((c) => ({ ...c, contactAddress: e.target.value }))} /></div>
@@ -53,7 +54,7 @@ function VehicleForm({ form, setForm, providers }) {
   return (
     <>
       <div className="form-row-3">
-        <div className="form-group"><label className="form-label">Nhà cung cấp</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chọn nhà cung cấp</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
+        <div className="form-group"><label className="form-label">Nhà cung cấp</label><CustomSelect className="admin-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} options={[{ value: '', label: 'Chọn nhà cung cấp' }, ...providers.map((p) => ({ value: p.ProviderId, label: p.Name }))]} placeholder="Chọn nhà cung cấp" /></div>
         <div className="form-group"><label className="form-label">Mã xe</label><input className="form-control" value={form.vehicleCode} onChange={(e) => setForm((c) => ({ ...c, vehicleCode: e.target.value }))} /></div>
         <div className="form-group"><label className="form-label">Biển số</label><input className="form-control" value={form.plateNumber} onChange={(e) => setForm((c) => ({ ...c, plateNumber: e.target.value }))} required /></div>
       </div>
@@ -64,7 +65,7 @@ function VehicleForm({ form, setForm, providers }) {
       </div>
       <div className="form-row">
         <div className="form-group"><label className="form-label">Số ghế</label><input className="form-control" type="number" min="0" value={form.seatCapacity} onChange={(e) => setForm((c) => ({ ...c, seatCapacity: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">Sẵn sàng</option><option value="inactive">Không hoạt động</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><CustomSelect className="admin-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))} options={[{ value: 'available', label: 'Sẵn sàng' }, { value: 'inactive', label: 'Không hoạt động' }]} /></div>
       </div>
       <div className="form-group"><label className="form-label">Tiện ích</label><textarea className="form-control" rows="3" value={form.amenities} onChange={(e) => setForm((c) => ({ ...c, amenities: e.target.value }))} /></div>
       <div className="form-group"><label className="form-label">Ảnh</label><input className="form-control" value={form.imageUrl} onChange={(e) => setForm((c) => ({ ...c, imageUrl: e.target.value }))} /></div>
@@ -76,13 +77,13 @@ function DriverForm({ form, setForm, providers }) {
   return (
     <>
       <div className="form-row">
-        <div className="form-group"><label className="form-label">Nhà cung cấp</label><select className="form-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} required><option value="">Chọn nhà cung cấp</option>{providers.map((p) => <option key={p.ProviderId} value={p.ProviderId}>{p.Name}</option>)}</select></div>
+        <div className="form-group"><label className="form-label">Nhà cung cấp</label><CustomSelect className="admin-select" value={form.providerId} onChange={(e) => setForm((c) => ({ ...c, providerId: e.target.value }))} options={[{ value: '', label: 'Chọn nhà cung cấp' }, ...providers.map((p) => ({ value: p.ProviderId, label: p.Name }))]} placeholder="Chọn nhà cung cấp" /></div>
         <div className="form-group"><label className="form-label">Họ tên</label><input className="form-control" value={form.fullName} onChange={(e) => setForm((c) => ({ ...c, fullName: e.target.value }))} required /></div>
       </div>
       <div className="form-row-3">
         <div className="form-group"><label className="form-label">Điện thoại</label><input className="form-control" value={form.phone} onChange={(e) => setForm((c) => ({ ...c, phone: e.target.value }))} /></div>
         <div className="form-group"><label className="form-label">Email</label><input className="form-control" value={form.email} onChange={(e) => setForm((c) => ({ ...c, email: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="available">Sẵn sàng</option><option value="inactive">Không hoạt động</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><CustomSelect className="admin-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))} options={[{ value: 'available', label: 'Sẵn sàng' }, { value: 'inactive', label: 'Không hoạt động' }]} /></div>
       </div>
       <div className="form-row-3">
         <div className="form-group"><label className="form-label">Số GPLX</label><input className="form-control" value={form.licenseNumber} onChange={(e) => setForm((c) => ({ ...c, licenseNumber: e.target.value }))} /></div>
@@ -113,7 +114,7 @@ function RouteForm({ form, setForm }) {
       <div className="form-row-3">
         <div className="form-group"><label className="form-label">Khoảng cách km</label><input className="form-control" type="number" min="0" value={form.distanceKm} onChange={(e) => setForm((c) => ({ ...c, distanceKm: e.target.value }))} /></div>
         <div className="form-group"><label className="form-label">Thời gian dự kiến phút</label><input className="form-control" type="number" min="0" value={form.estimatedDurationMinutes} onChange={(e) => setForm((c) => ({ ...c, estimatedDurationMinutes: e.target.value }))} /></div>
-        <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
+        <div className="form-group"><label className="form-label">Trạng thái</label><CustomSelect className="admin-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))} options={[{ value: 'active', label: 'Hoạt động' }, { value: 'inactive', label: 'Không hoạt động' }]} /></div>
       </div>
     </>
   );
@@ -197,7 +198,7 @@ function PickupManagementModal({ open, routeItem, onClose }) {
             </div>
             <div className="form-row">
               <div className="form-group"><label className="form-label">Địa chỉ</label><input className="form-control" value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} /></div>
-              <div className="form-group"><label className="form-label">Trạng thái</label><select className="form-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))}><option value="active">Hoạt động</option><option value="inactive">Không hoạt động</option></select></div>
+              <div className="form-group"><label className="form-label">Trạng thái</label><CustomSelect className="admin-select" value={form.status} onChange={(e) => setForm((c) => ({ ...c, status: e.target.value }))} options={[{ value: 'active', label: 'Hoạt động' }, { value: 'inactive', label: 'Không hoạt động' }]} /></div>
             </div>
             <div className="admin-inline-actions">{editingItem ? <button type="button" className="btn btn-outline" onClick={resetForm}>Hủy sửa</button> : null}<button type="submit" className="btn btn-primary" disabled={submitting}>{submitting ? 'Đang lưu...' : 'Lưu điểm đón'}</button></div>
           </form>
@@ -385,17 +386,9 @@ export function TransportManagementPage({ pageKey }) {
           <div className="data-controls">
             <form className="admin-filter-form" onSubmit={(event) => { event.preventDefault(); setFilters((current) => ({ ...current, search: draftSearch.trim(), page: 1 })); }}>
               <div className="search-input"><i className="fas fa-search" /><input value={draftSearch} onChange={(event) => setDraftSearch(event.target.value)} placeholder="Tìm kiếm..." /></div>
-              <select className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}>
-                <option value="">Tất cả trạng thái</option>
-                <option value="active">Hoạt động</option>
-                <option value="available">Sẵn sàng</option>
-                <option value="inactive">Không hoạt động</option>
-              </select>
+              <CustomSelect className="filter-select" value={filters.status} onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))} options={[{ value: '', label: 'Tất cả trạng thái' }, { value: 'active', label: 'Hoạt động' }, { value: 'available', label: 'Sẵn sàng' }, { value: 'inactive', label: 'Không hoạt động' }]} placeholder="Tất cả trạng thái" />
               {config.filters.includes('provider') ? (
-                <select className="filter-select" value={filters.providerId} onChange={(event) => setFilters((current) => ({ ...current, providerId: event.target.value, page: 1 }))}>
-                  <option value="">Tất cả nhà cung cấp</option>
-                  {(lookups.providers || []).map((item) => <option key={item.ProviderId} value={item.ProviderId}>{item.Name}</option>)}
-                </select>
+                <CustomSelect className="filter-select" value={filters.providerId} onChange={(event) => setFilters((current) => ({ ...current, providerId: event.target.value, page: 1 }))} options={[{ value: '', label: 'Tất cả nhà cung cấp' }, ...(lookups.providers || []).map((item) => ({ value: item.ProviderId, label: item.Name }))]} placeholder="Tất cả nhà cung cấp" />
               ) : null}
               <button type="submit" className="btn btn-outline">Lọc</button>
             </form>

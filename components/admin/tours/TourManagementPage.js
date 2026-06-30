@@ -7,6 +7,7 @@ import AdminConfirmDialog from '../common/AdminConfirmDialog';
 import AdminEmptyState from '../common/AdminEmptyState';
 import AdminPagination from '../common/AdminPagination';
 import AdminStatusBadge from '../common/AdminStatusBadge';
+import CustomSelect from '../../common/CustomSelect';
 import TourDetailModal from './TourDetailModal';
 import TourFormModal from './TourFormModal';
 
@@ -152,17 +153,19 @@ export default function TourManagementPage() {
                   placeholder="Tìm theo mã hoặc tên tour"
                 />
               </div>
-              <select
+              <CustomSelect
                 className="filter-select"
                 value={filters.status}
                 onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}
-              >
-                <option value="">Tất cả trạng thái</option>
-                <option value="draft">Nháp</option>
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Tạm dừng</option>
-                <option value="archived">Lưu trữ</option>
-              </select>
+                options={[
+                  { value: '', label: 'Tất cả trạng thái' },
+                  { value: 'draft', label: 'Nháp' },
+                  { value: 'active', label: 'Hoạt động' },
+                  { value: 'inactive', label: 'Tạm dừng' },
+                  { value: 'archived', label: 'Lưu trữ' },
+                ]}
+                placeholder="Tất cả trạng thái"
+              />
               <button type="submit" className="btn btn-outline">Lọc</button>
             </form>
           </div>
