@@ -27,25 +27,11 @@ async function getTours(filters) {
   const query = { status: 'active' };
 
   if (search) {
-    const destinationMatches = await Destination.find({
-      $or: [
-        { name: { $regex: search, $options: 'i' } },
-        { slug: { $regex: search, $options: 'i' } },
-        { province: { $regex: search, $options: 'i' } },
-        { region: { $regex: search, $options: 'i' } },
-      ],
-    }).select('_id').lean();
-
     query.$or = [
       { title: { $regex: search, $options: 'i' } },
       { tags: { $regex: search, $options: 'i' } },
       { shortDescription: { $regex: search, $options: 'i' } },
-      { departurePlaceName: { $regex: search, $options: 'i' } },
     ];
-
-    if (destinationMatches.length) {
-      query.$or.push({ destinationIds: { $in: destinationMatches.map((item) => item._id) } });
-    }
   }
   if (minPrice) query.basePrice = { ...query.basePrice, $gte: parseFloat(minPrice) };
   if (maxPrice) query.basePrice = { ...query.basePrice, $lte: parseFloat(maxPrice) };

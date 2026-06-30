@@ -1,6 +1,8 @@
 /* ===================================================
    VietTravel Admin Panel CSS
    =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
   --sidebar-bg: #0f172a;
   --sidebar-width: 260px;
@@ -23,7 +25,7 @@
   --shadow: 0 2px 12px rgba(0,0,0,0.08);
   --shadow-md: 0 4px 24px rgba(0,0,0,0.12);
   --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-  --font: 'Be Vietnam Pro', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font: 'Inter', sans-serif;
 }
 
 html.dark-theme {
@@ -40,9 +42,8 @@ html.dark-theme {
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body, #__next { width: 100%; min-height: 100%; font-family: var(--font); color: var(--dark); }
-body { background: var(--bg); overflow: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
-#__next { width: 100%; }
+html, body { height: 100%; font-family: var(--font); color: var(--dark); }
+body { background: var(--bg); display: flex; overflow: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; font-family: var(--font); outline: none; }
@@ -115,16 +116,7 @@ ul { list-style: none; }
 .logout-btn:hover { color: var(--danger); }
 
 /* ─── MAIN AREA ─────────────────────────────────────── */
-.admin-shell { width: 100%; min-height: 100vh; }
-.main-content {
-  margin-left: var(--sidebar-width);
-  width: calc(100% - var(--sidebar-width));
-  min-width: 0;
-  overflow-y: auto;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+.main-content { margin-left: var(--sidebar-width); flex: 1; overflow-y: auto; height: 100vh; display: flex; flex-direction: column; }
 
 /* ─── HEADER ─────────────────────────────────────── */
 .admin-header {
@@ -308,28 +300,6 @@ tbody tr:hover { background: rgba(255,107,53,0.03); }
 /* ─── DASHBOARD ───────────────────────────────────── */
 .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
 .chart-container { height: 300px; position: relative; }
-.dashboard-card { overflow: hidden; }
-.dashboard-wide { min-width: 0; }
-.dashboard-subtitle {
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--gray);
-}
-.chart-container-compact {
-  height: 320px;
-}
-.dashboard-empty {
-  min-height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--gray);
-  font-size: 14px;
-  border: 1px dashed var(--border);
-  border-radius: 14px;
-  background: rgba(148,163,184,0.05);
-}
 
 /* ─── LOADING ─────────────────────────────────────── */
 .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 60px; }

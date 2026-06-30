@@ -1,3 +1,8 @@
+/**
+ * VietTravel - Main Server Entry Point
+ * Combines Next.js frontend with Express.js API backend.
+ * Handles static assets, legacy URL redirects, and API routes.
+ */
 require('dotenv').config();
 const express = require('express');
 const next = require('next');

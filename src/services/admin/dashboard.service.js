@@ -1,4 +1,4 @@
-const { Tour, Booking, User, Vehicle, Driver, ContactLead } = require('../../models');
+const { Tour, Booking, User, Vehicle, Driver } = require('../../models');
 
 async function getDashboardData() {
   const now = new Date();
@@ -9,7 +9,7 @@ async function getDashboardData() {
   const [
     totalTours, totalBookings, pendingBookings, totalCustomers, revenueAgg,
     bookingsLast7, newCustomersLast7, totalVehicles, availableDrivers,
-    recentBookings, topTours, revenueByMonth, recentContactLeads,
+    recentBookings, topTours, revenueByMonth,
   ] = await Promise.all([
     Tour.countDocuments({ status: 'active' }),
     Booking.countDocuments(),
@@ -31,7 +31,6 @@ async function getDashboardData() {
       { $group: { _id: { year: { $year: '$createdAt' }, month: { $month: '$createdAt' } }, revenue: { $sum: '$paidAmount' }, bookingCount: { $sum: 1 } } },
       { $sort: { '_id.year': 1, '_id.month': 1 } },
     ]),
-    ContactLead ? ContactLead.find().sort({ createdAt: -1 }).limit(10).lean() : Promise.resolve([]),
   ]);
 
   const tourIds = topTours.map((t) => t._id).filter(Boolean);
@@ -60,14 +59,6 @@ async function getDashboardData() {
       PaymentStatus: b.paymentStatus,
       Status: b.status,
       CreatedAt: b.createdAt,
-    })),
-    recentContactLeads: (recentContactLeads || []).map((l) => ({
-      LeadId: l._id.toString(),
-      FullName: l.fullName,
-      Email: l.email,
-      Phone: l.phone || '-',
-      PromoCode: l.promoCode || '-',
-      CreatedAt: l.createdAt,
     })),
     topTours: topTours.map((t) => {
       const tour = tourMap[t._id?.toString()];

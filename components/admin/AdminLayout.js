@@ -7,19 +7,19 @@ import { toggleDarkMode, syncDarkModeIcons } from '../../lib/theme';
 
 const NAV = [
   { section: 'Tổng quan', items: [{ href: '/admin', icon: 'fa-tachometer-alt', label: 'Dashboard', key: 'index' }] },
-  { section: 'Quản lý tour', items: [
-    { href: '/admin/tours', icon: 'fa-map-marked-alt', label: 'Danh sách tour', key: 'tours' },
+  { section: 'Quản lý Tour', items: [
+    { href: '/admin/tours', icon: 'fa-map-marked-alt', label: 'Danh sách Tours', key: 'tours' },
     { href: '/admin/departures', icon: 'fa-calendar-alt', label: 'Lịch khởi hành', key: 'departures' },
     { href: '/admin/destinations', icon: 'fa-compass', label: 'Điểm đến', key: 'destinations' },
   ]},
   { section: 'Vận tải', items: [
-    { href: '/admin/vehicles', icon: 'fa-bus', label: 'Quản lý xe', key: 'vehicles' },
+    { href: '/admin/vehicles', icon: 'fa-bus', label: 'Quản lý Xe', key: 'vehicles' },
     { href: '/admin/drivers', icon: 'fa-id-card', label: 'Tài xế', key: 'drivers' },
     { href: '/admin/providers', icon: 'fa-building', label: 'Nhà cung cấp', key: 'providers' },
     { href: '/admin/routes', icon: 'fa-route', label: 'Tuyến đường', key: 'routes' },
   ]},
   { section: 'Kinh doanh', items: [
-    { href: '/admin/bookings', icon: 'fa-suitcase', label: 'Quản lý booking', key: 'bookings' },
+    { href: '/admin/bookings', icon: 'fa-suitcase', label: 'Quản lý Booking', key: 'bookings' },
     { href: '/admin/promotions', icon: 'fa-tag', label: 'Khuyến mãi', key: 'promotions' },
   ]},
   { section: 'Hệ thống', items: [{ href: '/admin/users', icon: 'fa-users', label: 'Người dùng', key: 'users' }] },
@@ -56,10 +56,11 @@ export default function AdminLayout({ children, title = 'Admin', subtitle }) {
   const logout = () => { clearAdminAuth(); router.push('/admin/login'); };
 
   return (
-    <div className="admin-shell">
+    <>
       <Head>
         <title>{title} - VietTravel Admin</title>
         <link rel="stylesheet" href="/css/admin.css" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" defer />
       </Head>
       <aside className="sidebar" id="sidebar">
         <div className="sidebar-logo">
@@ -106,6 +107,6 @@ export default function AdminLayout({ children, title = 'Admin', subtitle }) {
         <div className="page-content">{children}</div>
       </div>
       <div className="toast-container" id="toastContainer" />
-    </div>
+    </>
   );
 }

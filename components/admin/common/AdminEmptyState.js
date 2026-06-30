@@ -1,7 +1,7 @@
 export default function AdminEmptyState({
   icon = 'fa-inbox',
-  title = 'Chưa có dữ liệu',
-  description = 'Không có bản ghi nào phù hợp với bộ lọc hiện tại.',
+  title = 'Chua co du lieu',
+  description = 'Khong co ban ghi nao phu hop voi bo loc hien tai.',
 }) {
   return (
     <div className="empty-state">

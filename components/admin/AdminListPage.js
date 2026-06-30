@@ -4,16 +4,16 @@ import { adminAPI } from '../../lib/api';
 import { formatCurrency, formatDate } from '../../lib/format';
 
 const CONFIG = {
-  tours: { title: 'Quản lý tour', api: '/admin/tours', cols: ['Mã', 'Tên tour', 'Giá cơ bản', 'Trạng thái'], render: (r) => [r.Code, r.Title, formatCurrency(r.BasePrice), r.Status] },
-  bookings: { title: 'Quản lý booking', api: '/admin/bookings', cols: ['Mã', 'Khách', 'Tour', 'Tổng tiền', 'Trạng thái'], render: (r) => [r.BookingCode, r.CustomerFullName, r.TourTitleSnapshot, formatCurrency(r.TotalAmount), r.Status] },
-  users: { title: 'Người dùng', api: '/admin/users', cols: ['Tên', 'Email', 'Vai trò', 'Trạng thái'], render: (r) => [r.FullName, r.Email, r.Role, r.Status] },
-  destinations: { title: 'Điểm đến', api: '/admin/destinations', cols: ['Tên', 'Slug', 'Số tour'], render: (r) => [r.Name, r.Slug, r.TourCount] },
-  departures: { title: 'Lịch khởi hành', api: '/admin/tours/all-departures', cols: ['Tour', 'Mã', 'Ngày đi', 'Trạng thái'], render: (r) => [r.TourTitle, r.DepartureCode, formatDate(r.StartDate), r.Status] },
-  vehicles: { title: 'Quản lý xe', api: '/admin/transport/vehicles', cols: ['Biển số', 'Loại', 'Nhà cung cấp', 'Trạng thái'], render: (r) => [r.PlateNumber, r.Type, r.ProviderName, r.Status] },
-  drivers: { title: 'Tài xế', api: '/admin/transport/drivers', cols: ['Tên', 'Điện thoại', 'Nhà cung cấp', 'Trạng thái'], render: (r) => [r.FullName, r.Phone, r.ProviderName, r.Status] },
-  providers: { title: 'Nhà cung cấp', api: '/admin/transport/providers', cols: ['Tên', 'Loại', 'Số xe', 'Trạng thái'], render: (r) => [r.Name, r.Type, r.VehicleCount, r.Status] },
-  routes: { title: 'Tuyến đường', api: '/admin/transport/routes', cols: ['Mã', 'Tên', 'Điểm đi', 'Điểm đến'], render: (r) => [r.RouteCode, r.Name, r.FromName, r.ToName] },
-  promotions: { title: 'Khuyến mãi', api: '/admin/promotions', cols: ['Mã', 'Tên', 'Giảm', 'Trạng thái'], render: (r) => [r.Code, r.Name, r.DiscountValue, r.Status] },
+  tours: { title: 'Quản lý Tours', api: '/admin/tours', cols: ['Code', 'Title', 'BasePrice', 'Status'], render: (r) => [r.Code, r.Title, formatCurrency(r.BasePrice), r.Status] },
+  bookings: { title: 'Quản lý Booking', api: '/admin/bookings', cols: ['Mã', 'Khách', 'Tour', 'Tổng tiền', 'Trạng thái'], render: (r) => [r.BookingCode, r.CustomerFullName, r.TourTitleSnapshot, formatCurrency(r.TotalAmount), r.Status] },
+  users: { title: 'Người dùng', api: '/admin/users', cols: ['Tên', 'Email', 'Role', 'Status'], render: (r) => [r.FullName, r.Email, r.Role, r.Status] },
+  destinations: { title: 'Điểm đến', api: '/admin/destinations', cols: ['Tên', 'Slug', 'TourCount'], render: (r) => [r.Name, r.Slug, r.TourCount] },
+  departures: { title: 'Lịch khởi hành', api: '/admin/tours/all-departures', cols: ['Tour', 'Mã', 'Ngày', 'Trạng thái'], render: (r) => [r.TourTitle, r.DepartureCode, formatDate(r.StartDate), r.Status] },
+  vehicles: { title: 'Quản lý Xe', api: '/admin/transport/vehicles', cols: ['Biển số', 'Loại', 'NCC', 'Status'], render: (r) => [r.PlateNumber, r.Type, r.ProviderName, r.Status] },
+  drivers: { title: 'Tài xế', api: '/admin/transport/drivers', cols: ['Tên', 'Phone', 'NCC', 'Status'], render: (r) => [r.FullName, r.Phone, r.ProviderName, r.Status] },
+  providers: { title: 'Nhà cung cấp', api: '/admin/transport/providers', cols: ['Tên', 'Loại', 'Xe', 'Status'], render: (r) => [r.Name, r.Type, r.VehicleCount, r.Status] },
+  routes: { title: 'Tuyến đường', api: '/admin/transport/routes', cols: ['Mã', 'Tên', 'Từ', 'Đến'], render: (r) => [r.RouteCode, r.Name, r.FromName, r.ToName] },
+  promotions: { title: 'Khuyến mãi', api: '/admin/promotions', cols: ['Mã', 'Tên', 'Giảm', 'Status'], render: (r) => [r.Code, r.Name, r.DiscountValue, r.Status] },
 };
 
 export default function AdminListPage({ pageKey }) {

@@ -9,8 +9,8 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "seed": "node scripts/seed-mongodb.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["travel", "tour", "booking", "vietnam", "nextjs"],
+  "author": "VietTravel Team",
   "license": "ISC",
   "dependencies": {
     "@google/genai": "^2.10.0",

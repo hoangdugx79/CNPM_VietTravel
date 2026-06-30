@@ -7,7 +7,6 @@ import AdminConfirmDialog from '../common/AdminConfirmDialog';
 import AdminEmptyState from '../common/AdminEmptyState';
 import AdminPagination from '../common/AdminPagination';
 import AdminStatusBadge from '../common/AdminStatusBadge';
-import CustomSelect from '../../common/CustomSelect';
 import TourDetailModal from './TourDetailModal';
 import TourFormModal from './TourFormModal';
 
@@ -34,7 +33,7 @@ export default function TourManagementPage() {
       return;
     }
 
-    showToast(data.message || 'Không thể tải dữ liệu bổ trợ.', 'error');
+    showToast(data.message || 'Khong the tai du lieu bo tro.', 'error');
   };
 
   const loadTours = async () => {
@@ -53,7 +52,7 @@ export default function TourManagementPage() {
       setRows(data.data || []);
       setPagination(data.pagination || { total: 0, page: 1, limit: filters.limit, totalPages: 1 });
     } else {
-      showToast(data.message || 'Không thể tải danh sách tour.', 'error');
+      showToast(data.message || 'Khong the tai danh sach tour.', 'error');
     }
 
     setLoading(false);
@@ -75,7 +74,7 @@ export default function TourManagementPage() {
   const openEdit = async (tourId) => {
     const { ok, data } = await adminAPI(`/admin/tours/${tourId}`);
     if (!ok) {
-      showToast(data.message || 'Không thể tải chi tiết tour.', 'error');
+      showToast(data.message || 'Khong the tai chi tiet tour.', 'error');
       return;
     }
 
@@ -96,11 +95,11 @@ export default function TourManagementPage() {
     setSubmitting(false);
 
     if (!ok) {
-      showToast(data.message || 'Không thể lưu tour.', 'error');
+      showToast(data.message || 'Khong the luu tour.', 'error');
       return;
     }
 
-    showToast(editingTour?.TourId ? 'Cập nhật tour thành công.' : 'Tạo tour thành công.', 'success');
+    showToast(editingTour?.TourId ? 'Cap nhat tour thanh cong.' : 'Tao tour thanh cong.', 'success');
     setFormOpen(false);
     setEditingTour(null);
     await loadTours();
@@ -116,22 +115,22 @@ export default function TourManagementPage() {
     setArchiveLoading(false);
 
     if (!ok) {
-      showToast(data.message || 'Không thể lưu trữ tour.', 'error');
+      showToast(data.message || 'Khong the luu tru tour.', 'error');
       return;
     }
 
-    showToast('Lưu trữ tour thành công.', 'success');
+    showToast('Luu tru tour thanh cong.', 'success');
     setArchiveTarget(null);
     await loadTours();
   };
 
   return (
-    <AdminLayout title="Quản lý tour" subtitle="CRUD tour, lịch trình và lịch khởi hành từ một màn hình quản trị">
+    <AdminLayout title="Quan ly Tours" subtitle="CRUD tour, lich trinh va lich khoi hanh tu mot man hinh quan tri">
       <ToastContainer />
       <div className="page-header-bar">
-        <h2>Danh sách tour</h2>
+        <h2>Danh sach Tours</h2>
         <button type="button" className="btn btn-primary" onClick={openCreate}>
-          <i className="fas fa-plus" /> Tạo tour mới
+          <i className="fas fa-plus" /> Tao tour moi
         </button>
       </div>
 
@@ -150,23 +149,21 @@ export default function TourManagementPage() {
                 <input
                   value={draftSearch}
                   onChange={(event) => setDraftSearch(event.target.value)}
-                  placeholder="Tìm theo mã hoặc tên tour"
+                  placeholder="Tim theo ma hoac ten tour"
                 />
               </div>
-              <CustomSelect
+              <select
                 className="filter-select"
                 value={filters.status}
                 onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value, page: 1 }))}
-                options={[
-                  { value: '', label: 'Tất cả trạng thái' },
-                  { value: 'draft', label: 'Nháp' },
-                  { value: 'active', label: 'Hoạt động' },
-                  { value: 'inactive', label: 'Tạm dừng' },
-                  { value: 'archived', label: 'Lưu trữ' },
-                ]}
-                placeholder="Tất cả trạng thái"
-              />
-              <button type="submit" className="btn btn-outline">Lọc</button>
+              >
+                <option value="">Tat ca trang thai</option>
+                <option value="draft">Nhap</option>
+                <option value="active">Hoat dong</option>
+                <option value="inactive">Tam dung</option>
+                <option value="archived">Luu tru</option>
+              </select>
+              <button type="submit" className="btn btn-outline">Loc</button>
             </form>
           </div>
 
@@ -180,13 +177,13 @@ export default function TourManagementPage() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Mã</th>
-                      <th>Tên tour</th>
-                      <th>Thời lượng</th>
-                      <th>Giá cơ bản</th>
+                      <th>Ma</th>
+                      <th>Ten tour</th>
+                      <th>Thoi luong</th>
+                      <th>Gia co ban</th>
                       <th>Booking</th>
-                      <th>Trạng thái</th>
-                      <th>Thao tác</th>
+                      <th>Trang thai</th>
+                      <th>Thao tac</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -197,14 +194,14 @@ export default function TourManagementPage() {
                           <div className="admin-cell-title">{row.Title}</div>
                           <div className="admin-cell-subtitle">{row.DeparturePlaceName || row.Slug}</div>
                         </td>
-                        <td>{row.DurationDays} ngày {row.DurationNights} đêm</td>
+                        <td>{row.DurationDays} ngay {row.DurationNights} dem</td>
                         <td>{formatCurrency(row.BasePrice)}</td>
                         <td>{row.TotalBookings || 0}</td>
                         <td><AdminStatusBadge status={row.Status} /></td>
                         <td>
                           <div className="admin-inline-actions">
                             <button type="button" className="btn btn-outline btn-sm" onClick={() => openEdit(row.TourId)}>
-                              Sửa
+                              Sua
                             </button>
                             <button
                               type="button"
@@ -214,11 +211,11 @@ export default function TourManagementPage() {
                                 setDetailOpen(true);
                               }}
                             >
-                              Quản lý chi tiết
+                              Quan ly chi tiet
                             </button>
                             {row.Status !== 'archived' ? (
                               <button type="button" className="btn btn-danger btn-sm" onClick={() => setArchiveTarget(row)}>
-                                Lưu trữ
+                                Luu tru
                               </button>
                             ) : null}
                           </div>
@@ -236,8 +233,8 @@ export default function TourManagementPage() {
           ) : (
             <AdminEmptyState
               icon="fa-map-marked-alt"
-              title="Chưa có tour phù hợp"
-              description="Tạo tour mới hoặc điều chỉnh bộ lọc để tiếp tục."
+              title="Chua co tour phu hop"
+              description="Tao tour moi hoac dieu chinh bo loc de tiep tuc."
             />
           )}
         </div>
@@ -267,9 +264,9 @@ export default function TourManagementPage() {
 
       <AdminConfirmDialog
         open={Boolean(archiveTarget)}
-        title="Lưu trữ tour"
-        message={`Tour "${archiveTarget?.Title || ''}" sẽ được chuyển sang trạng thái lưu trữ. Bạn có muốn tiếp tục?`}
-        confirmLabel="Lưu trữ"
+        title="Luu tru tour"
+        message={`Tour "${archiveTarget?.Title || ''}" se duoc chuyen sang trang thai luu tru. Ban co muon tiep tuc?`}
+        confirmLabel="Luu tru"
         loading={archiveLoading}
         onClose={() => setArchiveTarget(null)}
         onConfirm={handleArchiveTour}

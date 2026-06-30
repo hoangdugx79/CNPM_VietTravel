@@ -240,14 +240,6 @@ const reviewSchema = new mongoose.Schema({
   status: { type: String, default: 'visible' },
 }, { timestamps: true });
 
-const contactLeadSchema = new mongoose.Schema({
-  fullName: { type: String, required: true },
-  email: { type: String, required: true },
-  phone: String,
-  promoCode: String,
-  status: { type: String, default: 'pending' },
-}, { timestamps: true });
-
 module.exports = {
   User: mongoose.models.User || mongoose.model('User', userSchema),
   Destination: mongoose.models.Destination || mongoose.model('Destination', destinationSchema),
@@ -265,5 +257,4 @@ module.exports = {
   Payment: mongoose.models.Payment || mongoose.model('Payment', paymentSchema),
   Promotion: mongoose.models.Promotion || mongoose.model('Promotion', promotionSchema),
   Review: mongoose.models.Review || mongoose.model('Review', reviewSchema),
-  ContactLead: mongoose.models.ContactLead || mongoose.model('ContactLead', contactLeadSchema),
 };

@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+// Cấu hình Next.js cho ứng dụng VietTravel
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -6,6 +7,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Cấu hình HTTP security headers
   async headers() {
     return [
       {
