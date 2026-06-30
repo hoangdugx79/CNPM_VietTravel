@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const { connectDB } = require('../db');
 const { User } = require('../models');
 const { mapUser } = require('../db/mapper');
 
@@ -12,6 +13,7 @@ const auth = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, config.jwt.secret);
+    await connectDB();
     const user = await User.findOne({ _id: decoded.userId, status: 'active' }).lean();
 
     if (!user) {
@@ -42,6 +44,7 @@ const optionalAuth = async (req, res, next) => {
     if (authHeader && authHeader.startsWith('Bearer ')) {
       const token = authHeader.split(' ')[1];
       const decoded = jwt.verify(token, config.jwt.secret);
+      await connectDB();
       const user = await User.findOne({ _id: decoded.userId, status: 'active' }).lean();
       if (user) req.user = mapUser(user);
     }

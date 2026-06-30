@@ -11,7 +11,7 @@ function buildUrlXml(url, lastmod, changefreq = 'weekly', priority = '0.7') {
 }
 
 export async function getServerSideProps({ res }) {
-  const { connectDB, disconnectDB } = require('../src/db');
+  const { connectDB } = require('../src/db');
   const { Tour, Destination } = require('../src/models');
   const siteUrl = config.siteUrl.replace(/\/$/, '');
   const today = new Date().toISOString();
@@ -29,7 +29,6 @@ export async function getServerSideProps({ res }) {
     Tour.find({ status: 'active' }, 'slug updatedAt').lean(),
     Destination.find({ status: 'active' }, 'slug updatedAt').lean(),
   ]);
-  await disconnectDB();
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
