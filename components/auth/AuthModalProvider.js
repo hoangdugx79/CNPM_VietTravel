@@ -68,7 +68,7 @@ function AuthModal({ isOpen, mode, adminOnly, redirectPath, onClose, onOpen }) {
 
         <div className="auth-modal-panel auth-modal-form">
           <div className="auth-modal-brand">
-            <i className="fas fa-globe-asia" />
+            <img src="/brand-logo-40.png" alt="VietTravel logo" />
             <span>VietTravel</span>
           </div>
 

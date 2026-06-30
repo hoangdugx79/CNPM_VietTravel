@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <div className="footer-logo"><i className="fas fa-globe-asia" /> VietTravel</div>
+            <div className="footer-logo"><img src="/brand-logo-40.png" alt="VietTravel logo" /> VietTravel</div>
             <p>Công ty du lịch VietTravel - mang đến những hành trình đáng nhớ trên khắp Việt Nam.</p>
           </div>
 

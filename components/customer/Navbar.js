@@ -50,7 +50,7 @@ export default function Navbar({ scrolled = false }) {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="navbar">
       <div className="container">
         <Link href="/" className="navbar-brand">
-          <i className="fas fa-globe-asia" />
+          <img src="/brand-logo-40.png" alt="VietTravel logo" />
           <span>VietTravel</span>
         </Link>
 

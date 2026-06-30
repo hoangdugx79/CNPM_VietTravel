@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
     });
   } catch (err) {
     console.error('Register error:', err);
-    res.status(500).json({ success: false, message: 'Loi server.' });
+    res.status(500).json({ success: false, message: 'Không thể đăng ký bằng Google lúc này.' });
   }
 });
 
@@ -54,7 +54,7 @@ router.post('/google', async (req, res) => {
     });
   } catch (err) {
     console.error('Google login error:', err);
-    res.status(500).json({ success: false, message: 'Loi server.' });
+    res.status(500).json({ success: false, message: 'Không thể đăng nhập bằng Google lúc này.' });
   }
 });
 

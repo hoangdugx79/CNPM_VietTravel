@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const config = require('../config');
+const { connectDB } = require('../db');
 const { User } = require('../models');
 const { mapUser } = require('../db/mapper');
 const { ADMIN_ROLES } = require('../constants');
@@ -25,6 +26,12 @@ function isConfiguredAdminEmail(email) {
   return config.admin.emails.includes(email);
 }
 
+function normalizeOptionalString(value) {
+  if (typeof value !== 'string') return undefined;
+  const cleaned = value.trim();
+  return cleaned || undefined;
+}
+
 async function loginWithGoogle(code) {
   if (!googleClient) {
     return { error: { status: 500, message: 'Google auth chua duoc cau hinh tren server.' } };
@@ -47,6 +54,9 @@ async function loginWithGoogle(code) {
 
   const email = payload.email.toLowerCase().trim();
   const shouldBeAdmin = isConfiguredAdminEmail(email);
+
+  await connectDB();
+
   let user = await User.findOne({
     $or: [
       { googleId: payload.sub },
@@ -59,6 +69,7 @@ async function loginWithGoogle(code) {
       fullName: payload.name || email.split('@')[0],
       email,
       googleId: payload.sub,
+      phone: undefined,
       authProvider: 'google',
       avatarUrl: payload.picture,
       role: shouldBeAdmin ? 'admin' : 'customer',
@@ -73,6 +84,7 @@ async function loginWithGoogle(code) {
     user.fullName = user.fullName || payload.name || email.split('@')[0];
     user.email = email;
     user.googleId = payload.sub;
+    user.phone = normalizeOptionalString(user.phone);
     user.authProvider = 'google';
     user.avatarUrl = payload.picture || user.avatarUrl;
     if (shouldBeAdmin && user.role !== 'admin') {
@@ -91,6 +103,7 @@ async function loginWithGoogle(code) {
 }
 
 async function getProfile(userId) {
+  await connectDB();
   const user = await User.findById(userId).lean();
   return mapUser(user);
 }

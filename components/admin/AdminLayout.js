@@ -53,7 +53,10 @@ export default function AdminLayout({ children, title = 'Admin', subtitle }) {
 
   if (router.pathname === '/admin/login') return children;
 
-  const logout = () => { clearAdminAuth(); router.push('/admin/login'); };
+  const logout = () => {
+    clearAdminAuth();
+    router.push('/admin/login');
+  };
 
   return (
     <>
@@ -64,7 +67,7 @@ export default function AdminLayout({ children, title = 'Admin', subtitle }) {
       </Head>
       <aside className="sidebar" id="sidebar">
         <div className="sidebar-logo">
-          <div className="logo-icon"><i className="fas fa-globe-asia" /></div>
+          <div className="logo-icon"><img src="/brand-logo-64.png" alt="VietTravel logo" /></div>
           <div><div className="logo-text">VietTravel</div><div className="logo-sub">Admin Panel</div></div>
         </div>
         <nav className="sidebar-nav">
