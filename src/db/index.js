@@ -41,7 +41,14 @@ async function ensureUserIndexes() {
     { $unset: { phone: '' } },
   );
 
-  const indexes = await users.indexes();
+  let indexes = [];
+  try {
+    indexes = await users.indexes();
+  } catch (error) {
+    if (error.code !== 26 && error.codeName !== 'NamespaceNotFound') {
+      throw error;
+    }
+  }
   const phoneIndex = indexes.find((index) => index.name === 'phone_1');
   const needsRebuild = !phoneIndex
     || !phoneIndex.unique
