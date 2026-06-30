@@ -9,6 +9,7 @@ import {
   PointElement,
   Tooltip,
 } from 'chart.js';
+import { useEffect, useRef, useState } from 'react';
 import { Doughnut, Line } from 'react-chartjs-2';
 import { formatCurrency } from '../../lib/format';
 
@@ -27,6 +28,40 @@ const MONTH_NAMES = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10'
 const TOUR_COLORS = ['#ff6b35', '#f59e0b', '#22c55e', '#3b82f6', '#8b5cf6'];
 
 export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) {
+  const lineContainerRef = useRef(null);
+  const doughnutContainerRef = useRef(null);
+  const [chartVersion, setChartVersion] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    let frameId = null;
+    const bumpCharts = () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(() => {
+        setChartVersion((value) => value + 1);
+      });
+    };
+
+    bumpCharts();
+
+    const resizeObserver = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(() => bumpCharts())
+      : null;
+
+    [lineContainerRef.current, doughnutContainerRef.current]
+      .filter(Boolean)
+      .forEach((element) => resizeObserver?.observe(element));
+
+    window.addEventListener('resize', bumpCharts);
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      window.removeEventListener('resize', bumpCharts);
+      resizeObserver?.disconnect();
+    };
+  }, [revenueByMonth.length, topTours.length]);
+
   const revenueLabels = revenueByMonth.map((item) => `${MONTH_NAMES[item.Month - 1] || `T${item.Month}`}/${item.Year}`);
   const revenueData = revenueByMonth.map((item) => item.Revenue || 0);
   const bookingData = revenueByMonth.map((item) => item.BookingCount || 0);
@@ -64,6 +99,7 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
   const lineChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    resizeDelay: 120,
     interaction: {
       mode: 'index',
       intersect: false,
@@ -102,6 +138,7 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
         },
         ticks: {
           color: '#94a3b8',
+          maxRotation: 0,
         },
       },
       y: {
@@ -141,10 +178,11 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
   const doughnutOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    resizeDelay: 120,
     cutout: '68%',
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
         labels: {
           usePointStyle: true,
           boxWidth: 10,
@@ -169,39 +207,49 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
   };
 
   return (
-    <div className="dashboard-grid">
-      <section className="admin-card dashboard-card dashboard-wide">
+    <div className="admin-dashboard-grid">
+      <section className="admin-card admin-dashboard-card admin-dashboard-wide">
         <div className="card-header">
           <div>
             <div className="card-title"><i className="fas fa-chart-line" /> Doanh thu 6 thang gan day</div>
-            <p className="dashboard-subtitle">Theo doi doanh thu va luong booking tren dashboard admin.</p>
+            <p className="admin-dashboard-subtitle">Theo doi doanh thu va luong booking tren dashboard admin.</p>
           </div>
         </div>
         <div className="card-body">
           {revenueByMonth.length > 0 ? (
-            <div className="chart-container">
-              <Line data={lineChartData} options={lineChartOptions} />
+            <div className="admin-chart-container" ref={lineContainerRef}>
+              <Line
+                key={`line-${chartVersion}-${revenueLabels.length}`}
+                data={lineChartData}
+                options={lineChartOptions}
+                redraw
+              />
             </div>
           ) : (
-            <div className="dashboard-empty">Chua co du lieu doanh thu de ve bieu do.</div>
+            <div className="admin-dashboard-empty">Chua co du lieu doanh thu de ve bieu do.</div>
           )}
         </div>
       </section>
 
-      <section className="admin-card dashboard-card">
+      <section className="admin-card admin-dashboard-card">
         <div className="card-header">
           <div>
             <div className="card-title"><i className="fas fa-chart-pie" /> Top tour noi bat</div>
-            <p className="dashboard-subtitle">Ty trong booking cua cac tour duoc dat nhieu nhat.</p>
+            <p className="admin-dashboard-subtitle">Ty trong booking cua cac tour duoc dat nhieu nhat.</p>
           </div>
         </div>
         <div className="card-body">
           {topTours.length > 0 ? (
-            <div className="chart-container chart-container-compact">
-              <Doughnut data={doughnutData} options={doughnutOptions} />
+            <div className="admin-chart-container admin-chart-container-compact" ref={doughnutContainerRef}>
+              <Doughnut
+                key={`doughnut-${chartVersion}-${topTourLabels.length}`}
+                data={doughnutData}
+                options={doughnutOptions}
+                redraw
+              />
             </div>
           ) : (
-            <div className="dashboard-empty">Chua co du lieu top tour de hien thi.</div>
+            <div className="admin-dashboard-empty">Chua co du lieu top tour de hien thi.</div>
           )}
         </div>
       </section>
