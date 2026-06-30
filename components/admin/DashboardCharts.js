@@ -29,12 +29,17 @@ const TOUR_COLORS = ['#ff6b35', '#f59e0b', '#22c55e', '#3b82f6', '#8b5cf6'];
 
 export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) {
   const [mounted, setMounted] = useState(false);
+  const [showChart, setShowChart] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const timer = setTimeout(() => {
+      setShowChart(true);
+    }, 250);
+    return () => clearTimeout(timer);
   }, []);
 
-  if (!mounted) {
+  if (!mounted || !showChart) {
     return (
       <div className="admin-dashboard-grid">
         <section className="admin-card admin-dashboard-card admin-dashboard-wide">
