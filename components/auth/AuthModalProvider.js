@@ -12,13 +12,56 @@ function AuthModal({ isOpen, mode, adminOnly, redirectPath, onClose, onOpen }) {
   const { showToast, ToastContainer } = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (!isOpen) {
       setLoading(false);
       setError('');
+      setEmail('');
+      setPassword('');
     }
   }, [isOpen]);
+
+  const handleLocalLogin = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError('Vui lòng điền đầy đủ email và mật khẩu.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+
+      const { ok, data } = await apiRequest('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!ok) {
+        setError(data.message || 'Đăng nhập thất bại.');
+        setLoading(false);
+        return;
+      }
+
+      if (adminOnly && !isAdminRole(data.user?.Role)) {
+        setError('Tài khoản này không có quyền quản trị.');
+        setLoading(false);
+        return;
+      }
+
+      applyAuthSession(data.token, data.user);
+      showToast('Đăng nhập thành công.', 'success');
+      onClose();
+      router.push(adminOnly ? '/admin' : (redirectPath || '/'));
+    } catch (err) {
+      setError(err.message || 'Lỗi kết nối đến máy chủ.');
+      setLoading(false);
+    }
+  };
 
   const handleGoogleAuth = async () => {
     try {
@@ -83,14 +126,76 @@ function AuthModal({ isOpen, mode, adminOnly, redirectPath, onClose, onOpen }) {
             </p>
           </div>
 
+          {mode === 'login' && (
+            <form onSubmit={handleLocalLogin} style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', marginBottom: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: '#4b5563' }}>Email</label>
+                <input
+                  type="email"
+                  placeholder="Nhập email của bạn..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    padding: '10px 14px',
+                    borderRadius: '6px',
+                    border: '1px solid #d1d5db',
+                    outline: 'none',
+                    fontSize: '14px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}
+                  required
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+                <label style={{ fontSize: '13px', fontWeight: '600', color: '#4b5563' }}>Mật khẩu</label>
+                <input
+                  type="password"
+                  placeholder="Nhập mật khẩu..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    padding: '10px 14px',
+                    borderRadius: '6px',
+                    border: '1px solid #d1d5db',
+                    outline: 'none',
+                    fontSize: '14px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  background: '#047857',
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s',
+                  marginTop: '4px',
+                  width: '100%'
+                }}
+              >
+                {loading ? 'Đang xử lý...' : 'Đăng nhập'}
+              </button>
+            </form>
+          )}
+
+          {error ? <p className="auth-modal-error">{error}</p> : null}
+
+          {mode === 'login' && <div className="auth-modal-divider"><span>Hoặc đăng nhập bằng Google</span></div>}
+
           <button type="button" className="auth-google-btn" onClick={handleGoogleAuth} disabled={loading}>
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
             <span>{loading ? 'Đang xử lý...' : adminOnly ? 'Tiếp tục với Google (Admin)' : 'Tiếp tục với Google'}</span>
           </button>
-
-          {error ? <p className="auth-modal-error">{error}</p> : null}
-
-          <div className="auth-modal-divider"><span>Xác thực chỉ bằng Google</span></div>
 
           <div className="auth-modal-helper">
             {adminOnly ? (

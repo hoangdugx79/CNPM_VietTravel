@@ -5,7 +5,26 @@ const { auth } = require('../middleware/auth');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  res.status(410).json({ success: false, message: 'He thong chi ho tro dang nhap bang Google.' });
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Thiếu email hoặc mật khẩu.' });
+    }
+    const result = await authService.loginWithPassword(email, password);
+    if (result.error) {
+      return res.status(result.error.status).json({ success: false, message: result.error.message });
+    }
+    res.json({
+      success: true,
+      message: 'Đăng nhập thành công.',
+      token: result.token,
+      user: result.user,
+      adminEligible: result.adminEligible,
+    });
+  } catch (err) {
+    console.error('Password login error:', err);
+    res.status(500).json({ success: false, message: 'Lỗi hệ thống khi đăng nhập.' });
+  }
 });
 
 router.post('/register', async (req, res) => {

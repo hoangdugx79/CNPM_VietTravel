@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
+const bcrypt = require('bcryptjs');
 const config = require('../config');
 const { connectDB } = require('../db');
 const { User } = require('../models');
@@ -108,4 +109,29 @@ async function getProfile(userId) {
   return mapUser(user);
 }
 
-module.exports = { loginWithGoogle, getProfile, isAdminRole };
+async function loginWithPassword(email, password) {
+  await connectDB();
+  const normalizedEmail = email.toLowerCase().trim();
+  const user = await User.findOne({ email: normalizedEmail });
+  if (!user) {
+    return { error: { status: 401, message: 'Email hoặc mật khẩu không chính xác.' } };
+  }
+  if (user.status !== 'active') {
+    return { error: { status: 403, message: 'Tài khoản đã bị khóa.' } };
+  }
+  if (!user.passwordHash) {
+    return { error: { status: 400, message: 'Tài khoản này chưa cấu hình mật khẩu (đăng nhập bằng Google).' } };
+  }
+  const isMatch = await bcrypt.compare(password, user.passwordHash);
+  if (!isMatch) {
+    return { error: { status: 401, message: 'Email hoặc mật khẩu không chính xác.' } };
+  }
+  const mappedUser = mapUser(user);
+  return {
+    token: signUserToken(user),
+    user: mappedUser,
+    adminEligible: isAdminRole(mappedUser.Role),
+  };
+}
+
+module.exports = { loginWithGoogle, getProfile, isAdminRole, loginWithPassword };
