@@ -28,39 +28,38 @@ const MONTH_NAMES = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10'
 const TOUR_COLORS = ['#ff6b35', '#f59e0b', '#22c55e', '#3b82f6', '#8b5cf6'];
 
 export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) {
-  const lineContainerRef = useRef(null);
-  const doughnutContainerRef = useRef(null);
-  const [chartVersion, setChartVersion] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return undefined;
+    setMounted(true);
+  }, []);
 
-    let frameId = null;
-    const bumpCharts = () => {
-      if (frameId) window.cancelAnimationFrame(frameId);
-      frameId = window.requestAnimationFrame(() => {
-        setChartVersion((value) => value + 1);
-      });
-    };
-
-    bumpCharts();
-
-    const resizeObserver = typeof ResizeObserver !== 'undefined'
-      ? new ResizeObserver(() => bumpCharts())
-      : null;
-
-    [lineContainerRef.current, doughnutContainerRef.current]
-      .filter(Boolean)
-      .forEach((element) => resizeObserver?.observe(element));
-
-    window.addEventListener('resize', bumpCharts);
-
-    return () => {
-      if (frameId) window.cancelAnimationFrame(frameId);
-      window.removeEventListener('resize', bumpCharts);
-      resizeObserver?.disconnect();
-    };
-  }, [revenueByMonth.length, topTours.length]);
+  if (!mounted) {
+    return (
+      <div className="admin-dashboard-grid">
+        <section className="admin-card admin-dashboard-card admin-dashboard-wide">
+          <div className="card-header">
+            <div>
+              <div className="card-title"><i className="fas fa-chart-line" /> Doanh thu 6 thang gan day</div>
+            </div>
+          </div>
+          <div className="card-body" style={{ height: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+            Đang tải dữ liệu biểu đồ...
+          </div>
+        </section>
+        <section className="admin-card admin-dashboard-card">
+          <div className="card-header">
+            <div>
+              <div className="card-title"><i className="fas fa-chart-pie" /> Top tour noi bat</div>
+            </div>
+          </div>
+          <div className="card-body" style={{ height: '320px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+            Đang tải dữ liệu biểu đồ...
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   const revenueLabels = revenueByMonth.map((item) => `${MONTH_NAMES[item.Month - 1] || `T${item.Month}`}/${item.Year}`);
   const revenueData = revenueByMonth.map((item) => item.Revenue || 0);
@@ -217,12 +216,10 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
         </div>
         <div className="card-body">
           {revenueByMonth.length > 0 ? (
-            <div className="admin-chart-container" ref={lineContainerRef}>
+            <div className="admin-chart-container">
               <Line
-                key={`line-${chartVersion}-${revenueLabels.length}`}
                 data={lineChartData}
                 options={lineChartOptions}
-                redraw
               />
             </div>
           ) : (
@@ -240,12 +237,10 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
         </div>
         <div className="card-body">
           {topTours.length > 0 ? (
-            <div className="admin-chart-container admin-chart-container-compact" ref={doughnutContainerRef}>
+            <div className="admin-chart-container admin-chart-container-compact">
               <Doughnut
-                key={`doughnut-${chartVersion}-${topTourLabels.length}`}
                 data={doughnutData}
                 options={doughnutOptions}
-                redraw
               />
             </div>
           ) : (
