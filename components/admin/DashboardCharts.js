@@ -103,7 +103,6 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
   const lineChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    resizeDelay: 120,
     interaction: {
       mode: 'index',
       intersect: false,
@@ -182,7 +181,6 @@ export default function DashboardCharts({ revenueByMonth = [], topTours = [] }) 
   const doughnutOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    resizeDelay: 120,
     cutout: '68%',
     plugins: {
       legend: {
