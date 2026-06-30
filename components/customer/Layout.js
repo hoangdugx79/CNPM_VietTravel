@@ -8,12 +8,20 @@ import { useToast } from '../Toast';
 const SITE_NAME = 'VietTravel';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://viettravel.brandgens.com';
 const DEFAULT_DESCRIPTION = 'VietTravel mang đến tour du lịch trọn gói tại Việt Nam với lịch trình tinh gọn, dịch vụ rõ ràng và trải nghiệm đặt tour nhanh trên mọi thiết bị.';
-const DEFAULT_IMAGE = '/uploads/halong_bay_tour_1782322278488.webp';
+const DEFAULT_IMAGE = '/brand-logo-512.png';
 
 function toAbsoluteUrl(input) {
   if (!input) return `${SITE_URL}${DEFAULT_IMAGE}`;
   if (/^https?:\/\//i.test(input)) return input;
   return new URL(input.startsWith('/') ? input : `/${input}`, SITE_URL).toString();
+}
+
+function getImageType(input) {
+  if (!input) return 'image/png';
+  if (/\.webp(?:$|\?)/i.test(input)) return 'image/webp';
+  if (/\.jpe?g(?:$|\?)/i.test(input)) return 'image/jpeg';
+  if (/\.svg(?:$|\?)/i.test(input)) return 'image/svg+xml';
+  return 'image/png';
 }
 
 export default function CustomerLayout({
@@ -34,12 +42,13 @@ export default function CustomerLayout({
   const robots = noindex || privateRoute ? 'noindex,nofollow' : 'index,follow,max-image-preview:large';
   const fullTitle = title === SITE_NAME ? SITE_NAME : title;
   const seoImage = toAbsoluteUrl(image);
+  const seoImageType = getImageType(image);
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: toAbsoluteUrl('/uploads/ic.webp'),
+    logo: toAbsoluteUrl(DEFAULT_IMAGE),
     sameAs: [SITE_URL],
   };
   const websiteJsonLd = {
@@ -75,12 +84,16 @@ export default function CustomerLayout({
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:image" content={seoImage} />
+        <meta property="og:image:type" content={seoImageType} />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
         <meta property="og:image:alt" content={fullTitle} />
 
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={fullTitle} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={seoImage} />
+        <meta name="twitter:image:alt" content={fullTitle} />
 
         <script
           type="application/ld+json"
